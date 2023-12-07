@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import './custom.css';
+import Login from './pages/Authentication/Login';
+import Header from './layout/header/Header';
+import ElasticityPricingTrack from './pages/IntegratedStrategy/ElasticityPricingTrack/ElasticityPricingTrack';
+import Sidebar from './layout/sidebar/Sidebar';
+import { useState } from 'react';
+
 
 function App() {
+
+  const [sidebarActive, setSidebarActive] = useState(false);
+
+  const toggleSidebarProp = () => {
+    setSidebarActive(!sidebarActive)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header toggleSidebarProp={toggleSidebarProp}/>
+      <div className="main">
+        <Sidebar sidebarActive={sidebarActive}/>
+        <div className="main-sub">
+          <Routes>
+            <Route path='/login' element={<Login />}></Route>
+            <Route path='/elasticity-pricing-track' element={<ElasticityPricingTrack />}></Route>
+          </Routes>
+        </div>
+      </div>
+    </>
   );
 }
 
