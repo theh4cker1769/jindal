@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Filter from "./Filter"
 import Products from "./Products"
 import ProductDetails from "./ProductDetails"
@@ -8,9 +8,14 @@ const ElasticityPricingTrack = () => {
 
     const [dataArray, setDataArray] = useState([]);
     const [countFirstProd, setCountFirstProd] = useState(0);
-    const sendProductData = (data: any) => {
+    const [filterDate, setFilterDate] = useState()
+    const [filterValue, setFilterValue] = useState()
+
+    const sendProductData = (data: any, date: any, filter: any) => {
         setDataArray(data)
         setCountFirstProd(current => current + 1)
+        setFilterDate(date)
+        setFilterValue(filter)
     }
 
     // Inner Product Data
@@ -25,6 +30,13 @@ const ElasticityPricingTrack = () => {
 
     const selectedProd = (v: any) => {
         setSelectedProdState(v)
+    }
+
+    const [adjustableFilters, setAdjustableFilters] = useState()
+
+    // Adjustable Filter Data
+    const adjustablefiltersData = (adjustablefiltersData: any) => {
+        setAdjustableFilters(adjustablefiltersData)
     }
 
     return (
@@ -42,8 +54,8 @@ const ElasticityPricingTrack = () => {
             <Filter sendProductData={sendProductData} />
             <section className="product-details">
                 <Products dataArray={dataArray} sendProductDataToParent={sendProductDataToParent} countFirstProd={countFirstProd} selectedProd={selectedProd}/>
-                <ProductDetails dataProdDetails={dataProdDetails} selectedProdState={selectedProdState} dataArray={dataArray} countFirstProd={countFirstProd} />
-                <AdjustableFilters dataProdDetails={dataProdDetails} />
+                <ProductDetails adjustableFilters={adjustableFilters} filterValue={filterValue} filterDate={filterDate} dataProdDetails={dataProdDetails} selectedProdState={selectedProdState} dataArray={dataArray} countFirstProd={countFirstProd} />
+                <AdjustableFilters dataProdDetails={dataProdDetails} adjustablefiltersData={adjustablefiltersData}/>
             </section>
         </div>
     )

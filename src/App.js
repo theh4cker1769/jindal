@@ -4,6 +4,7 @@ import './custom.css';
 import Login from './pages/Authentication/Login';
 import Header from './layout/header/Header';
 import ElasticityPricingTrack from './pages/IntegratedStrategy/ElasticityPricingTrack/ElasticityPricingTrack';
+import Test from './Test'
 import Sidebar from './layout/sidebar/Sidebar';
 import { useState } from 'react';
 
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path='/login' element={<Login />}></Route>
             <Route path='/elasticity-pricing-track' element={<ElasticityPricingTrack />}></Route>
+            <Route path='/test' element={<Test />}></Route>
           </Routes>
         </div>
       </div>

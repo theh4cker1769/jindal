@@ -9,8 +9,6 @@ const AdjustableFilters = (props: any) => {
         setDropdown(!dropdown)
     }
 
-    console.log(props.dataProdDetails[0])
-
     const [priceElasticityExpected, setPriceElasticityExpected] = useState('')
     const [gramsElasticityExpected, setGramsElasticityExpected] = useState('')
     const [modelPriceElasticity, setModelPriceElasticity] = useState('')
@@ -45,7 +43,16 @@ const AdjustableFilters = (props: any) => {
     },[modelPriceElasticity, modelGramElasticity])
 
     
-    
+    const adjustablefiltersData = {
+        priceElasticityExpected: priceElasticityExpected,
+        gramsElasticityExpected: gramsElasticityExpected,
+        modelPriceElasticity: modelPriceElasticity,
+        modelGramElasticity: modelGramElasticity,
+    }
+
+    const applyAdjust = () => {
+        props.adjustablefiltersData(adjustablefiltersData)
+    }
 
 
     return (
@@ -112,6 +119,7 @@ const AdjustableFilters = (props: any) => {
                                 </div>
                             </div>
                         </div>
+                        <button className="filterBtn" type="button" onClick={applyAdjust}>Apply</button>
                     </div>
                 </div>
             }

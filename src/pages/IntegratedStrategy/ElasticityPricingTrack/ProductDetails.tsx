@@ -6,9 +6,14 @@ Chart.register(...registerables);
 
 const ProductDetails = (props: any) => {
 
-    const [pricePerUnitFrom, setPricePerUnitFrom] = useState('')
-    const [pricePerUnitTo, setPricePerUnitTo] = useState('')
-    const [pricePerUnitVar, setPricePerUnitVar] = useState('')
+    const [pricePerUnitFrom, setPricePerUnitFrom] = useState()
+    const [pricePerUnitTo, setPricePerUnitTo] = useState()
+    const [pricePerUnitVar, setPricePerUnitVar] = useState()
+    const [filterDate, setFilterDate] = useState()
+    const [filterValue, setFilterValue] = useState<any>([])
+
+    // Adjustable Filters
+    const [adjustableFilters, setAdjustableFilters] = useState<any>([])
 
 
     useEffect(() => {
@@ -16,6 +21,20 @@ const ProductDetails = (props: any) => {
             setPricePerUnitFrom(props.dataProdDetails[0].pricePerUnitFrom.toFixed(2))
             setPricePerUnitTo(props.dataProdDetails[0].pricePerUnitTo.toFixed(2))
             setPricePerUnitVar(props.dataProdDetails[0].pricePerUnitVar.toFixed(2))
+        }
+        if (props.filterDate) {
+            const day = props.filterDate.getDate().toString().padStart(2, '0');
+            const month = (props.filterDate.getMonth() + 1).toString().padStart(2, '0');
+            const year = props.filterDate.getFullYear();
+            const date:any = `${day}/${month}/${year}`
+            setFilterDate(date)
+        }
+        if(props.filterValue) {
+            setFilterValue(props.filterValue)
+            console.log(props.filterValue.category)
+        }
+        if(props.adjustableFilters) {
+            setAdjustableFilters(props.adjustableFilters)
         }
     })
 
@@ -41,7 +60,7 @@ const ProductDetails = (props: any) => {
     const [chartGraphDataState, setChartGraphDataState] = useState<any>()
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAxOTQ4OTQ1LCJleHAiOjE3MDIwMzUzNDUsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMTk0ODk0NX0.GppdaPFvMSlJAwUvesqPGhR3kRjy0p9cBEEjxxaZbBY';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMDY1NzA0LCJleHAiOjE3MDIxNTIxMDQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjA2NTcwNH0.Vwb9DDzrZrtdrnDvX2SVLAycCHxfjfcJXTdzJBuyzfo';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/unitvariationsexpected';
         const payload = {
             "country": "AUSTRALIA",
@@ -57,27 +76,13 @@ const ProductDetails = (props: any) => {
             ],
             "dataSource": "sellOut",
             "regions": null,
-            "category": [
-                "NAPPIES & CHILD CARE"
-            ],
-            "segment": [
-                "NAPPY PANTS-UNMAPPED"
-            ],
-            "brand": [
-                "HUGGIES"
-            ],
-            "subBrand": [
-                "HUGGIES ULTIMATE"
-            ],
-            "packSize": [
-                "BULK PK-JUNIOR NAP",
-                "BULK PK-TODDLER NAP",
-                "BULK PK-WALKER NAP",
-                "JUMBO PK-JUNIOR NAP",
-                "JUMBO PK-TODDLER NAP",
-                "JUMBO PK-WALKER NAP"
-            ],
-            "permutation": [selectProd],
+            "category": filterValue.category.map((v:any) => v.value) || [] ,
+            "segment": filterValue.segment.map((v:any) => v.value) || [],
+            "brand": filterValue.brand.map((v:any) => v.value) || [],
+            "subBrand": filterValue.subBrand.map((v:any) => v.value) || [],
+            "packSize": filterValue.packSize.map((v:any) => v.value) || [],
+            "permutation": filterValue.permutation.map((v:any) => v.value) || [],
+            //selectProd
             "measureFilters": [
                 {
                     "productName": "HUGGIES",
@@ -85,22 +90,22 @@ const ProductDetails = (props: any) => {
                     "subBrandName": "HUGGIES ULTIMATE",
                     "packSize": "JUMBO PK-WALKER NAP",
                     "displayName": selectProd,
-                    "pricePerUnitFrom": 35.45000246840442,
-                    "pricePerUnitTo": 35.36600103207905,
-                    "pricePerUnitVar": -0.23695749076531047,
+                    "pricePerUnitFrom": pricePerUnitFrom,
+                    "pricePerUnitTo": pricePerUnitTo,
+                    "pricePerUnitVar": pricePerUnitVar,
                     "gramPerUnitFrom": 52,
                     "gramPerUnitTo": 52,
                     "gramPerUnitVar": 0,
-                    "priceElasticityExpected": -2.73489290043942,
-                    "gramsElasticityExpected": 0,
-                    "modelPriceElasticity": "High",
-                    "modelGramsElasticityCurve": "High",
-                    "date": "02/05/2023",
+                    "priceElasticityExpected": adjustableFilters.priceElasticityExpected,
+                    "gramsElasticityExpected": adjustableFilters.gramsElasticityExpected,
+                    "modelPriceElasticity": adjustableFilters.modelPriceElasticity,
+                    "modelGramsElasticityCurve": adjustableFilters.modelGramElasticity,
+                    "date": filterDate,
                     "mixSellIn": 1,
                     "mixSellInBrandLevel": 1
                 }
             ],
-            "date": "02/05/2023",
+            "date": filterDate,
             "pricingDate": "2023-02-01T00:00:00.000+05:30"
         }
 
