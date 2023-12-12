@@ -32,9 +32,9 @@ const ElasticityPricingTrack = () => {
         setSelectedProdState(v)
     }
 
-    const [adjustableFilters, setAdjustableFilters] = useState()
-
+    
     // Adjustable Filter Data
+    const [adjustableFilters, setAdjustableFilters] = useState()
     const adjustablefiltersData = (adjustablefiltersData: any) => {
         setAdjustableFilters(adjustablefiltersData)
     }

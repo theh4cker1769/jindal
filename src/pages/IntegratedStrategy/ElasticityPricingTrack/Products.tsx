@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TbTriangleFilled } from "react-icons/tb";
 
 const Products = (props: any) => {
@@ -6,7 +6,7 @@ const Products = (props: any) => {
     useEffect(() => {
 
         const handleClickFirElem = () => {
-            setSelectProd([props.dataArray[0].value])
+            setSelectProd(props.dataArray[0].value)
         }
 
         if (props.countFirstProd > 0) {
@@ -24,17 +24,17 @@ const Products = (props: any) => {
     }
 
     const [activeIndex, setActiveIndex] = useState(0)
-    const [selectProd, setSelectProd] = useState<any>([])
+    const [selectProd, setSelectProd] = useState()
     const [dataProd, setDataProd] = useState<any>([])
 
     const handleItemClick = (v: any, i: any) => {
         setActiveIndex(i)
-        setSelectProd([v.value])
+        setSelectProd(v.value)
         props.selectedProd(v.value)
     }
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMDY1NzA0LCJleHAiOjE3MDIxNTIxMDQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjA2NTcwNH0.Vwb9DDzrZrtdrnDvX2SVLAycCHxfjfcJXTdzJBuyzfo';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMjcyMzg2LCJleHAiOjE3MDIzNTg3ODYsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjI3MjM4Nn0.abc-o-WYklsnkePwNarw-KvaxvRH4XHzDrifjoV10E4';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/adjustablefilters';
         const payload = {
             "country": "AUSTRALIA",
@@ -69,7 +69,7 @@ const Products = (props: any) => {
                 "JUMBO PK-TODDLER NAP",
                 "JUMBO PK-WALKER NAP"
             ],
-            "permutation": selectProd,
+            "permutation": [selectProd],
             "regions": null,
             "date": "02/02/2023",
             "dataSource": "sellOut"
@@ -88,6 +88,7 @@ const Products = (props: any) => {
             if (response.ok) {
                 const result = await response.json();
                 setDataProd(result);
+                console.log(result)
             } else {
                 console.error('Failed to fetch data');
             }
@@ -99,14 +100,16 @@ const Products = (props: any) => {
     };
 
     useEffect(() => {
-        fetchData()
-    }, [selectProd, props.countFirstProd]);
+        if(selectProd) {
+            fetchData()
+        }
+    }, [selectProd]);
 
     useEffect(() => {
         if (dataProd.length > 0) {
             props.sendProductDataToParent(dataProd)
         }
-    })
+    }, [dataProd])
 
     return (
         <div className="products-main">

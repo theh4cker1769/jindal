@@ -218,6 +218,11 @@
     padding: 6px 12px;
 }
 
+.filterBtn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .filterBtn:hover {
     background-color: #eb6364;
 }

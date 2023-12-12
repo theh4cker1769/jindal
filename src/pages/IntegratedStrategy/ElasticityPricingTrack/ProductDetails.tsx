@@ -13,8 +13,7 @@ const ProductDetails = (props: any) => {
     const [filterValue, setFilterValue] = useState<any>([])
 
     // Adjustable Filters
-    const [adjustableFilters, setAdjustableFilters] = useState<any>([])
-
+    const [adjustableFiltersData, setAdjustableFiltersData] = useState<any>({})
 
     useEffect(() => {
         if (props.dataProdDetails.length > 0) {
@@ -26,17 +25,17 @@ const ProductDetails = (props: any) => {
             const day = props.filterDate.getDate().toString().padStart(2, '0');
             const month = (props.filterDate.getMonth() + 1).toString().padStart(2, '0');
             const year = props.filterDate.getFullYear();
-            const date:any = `${day}/${month}/${year}`
+            const date: any = `${day}/${month}/${year}`
             setFilterDate(date)
         }
-        if(props.filterValue) {
+        if (props.filterValue) {
             setFilterValue(props.filterValue)
             console.log(props.filterValue.category)
         }
-        if(props.adjustableFilters) {
-            setAdjustableFilters(props.adjustableFilters)
+        if (props.adjustableFilters) {
+            setAdjustableFiltersData(props.adjustableFilters)
         }
-    })
+    }, [props.dataProdDetails, props.filterDate, props.filterValue, props.adjustableFilters])
 
     const [selectProd, setSelectProd] = useState<any>()
 
@@ -60,7 +59,7 @@ const ProductDetails = (props: any) => {
     const [chartGraphDataState, setChartGraphDataState] = useState<any>()
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMDY1NzA0LCJleHAiOjE3MDIxNTIxMDQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjA2NTcwNH0.Vwb9DDzrZrtdrnDvX2SVLAycCHxfjfcJXTdzJBuyzfo';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMjcyMzg2LCJleHAiOjE3MDIzNTg3ODYsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjI3MjM4Nn0.abc-o-WYklsnkePwNarw-KvaxvRH4XHzDrifjoV10E4';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/unitvariationsexpected';
         const payload = {
             "country": "AUSTRALIA",
@@ -76,12 +75,12 @@ const ProductDetails = (props: any) => {
             ],
             "dataSource": "sellOut",
             "regions": null,
-            "category": filterValue.category.map((v:any) => v.value) || [] ,
-            "segment": filterValue.segment.map((v:any) => v.value) || [],
-            "brand": filterValue.brand.map((v:any) => v.value) || [],
-            "subBrand": filterValue.subBrand.map((v:any) => v.value) || [],
-            "packSize": filterValue.packSize.map((v:any) => v.value) || [],
-            "permutation": filterValue.permutation.map((v:any) => v.value) || [],
+            "category": filterValue.category.map((v: any) => v.value) || [],
+            "segment": filterValue.segment.map((v: any) => v.value) || [],
+            "brand": filterValue.brand.map((v: any) => v.value) || [],
+            "subBrand": filterValue.subBrand.map((v: any) => v.value) || [],
+            "packSize": filterValue.packSize.map((v: any) => v.value) || [],
+            "permutation": filterValue.permutation.map((v: any) => v.value) || [],
             //selectProd
             "measureFilters": [
                 {
@@ -96,10 +95,10 @@ const ProductDetails = (props: any) => {
                     "gramPerUnitFrom": 52,
                     "gramPerUnitTo": 52,
                     "gramPerUnitVar": 0,
-                    "priceElasticityExpected": adjustableFilters.priceElasticityExpected,
-                    "gramsElasticityExpected": adjustableFilters.gramsElasticityExpected,
-                    "modelPriceElasticity": adjustableFilters.modelPriceElasticity,
-                    "modelGramsElasticityCurve": adjustableFilters.modelGramElasticity,
+                    "priceElasticityExpected": adjustableFiltersData.priceElasticityExpected,
+                    "gramsElasticityExpected": adjustableFiltersData.gramsElasticityExpected,
+                    "modelPriceElasticity": adjustableFiltersData.modelPriceElasticity,
+                    "modelGramsElasticityCurve": adjustableFiltersData.modelGramElasticity,
                     "date": filterDate,
                     "mixSellIn": 1,
                     "mixSellInBrandLevel": 1
@@ -149,8 +148,13 @@ const ProductDetails = (props: any) => {
     }
 
     useEffect(() => {
-        fetchData();
-    }, [selectProd, props.countFirstProd, props.selectedProdState])
+        if (selectProd) {
+            fetchData();
+        }
+        if (adjustableFiltersData.length > 0) {
+            fetchData();
+        }
+    }, [selectProd, adjustableFiltersData])
 
 
     const options = {
@@ -213,14 +217,14 @@ const ProductDetails = (props: any) => {
                                             Price Per <br />
                                             Pack From
                                         </label>
-                                        <input type="text" name="" id="" value={pricePerUnitFrom} />
+                                        <input type="text" name="" id="" value={pricePerUnitFrom} onChange={(e: any) => setPricePerUnitFrom(e.target.value)} />
                                     </li>
                                     <li>
                                         <label htmlFor="">
                                             Price Per <br />
                                             Pack To
                                         </label>
-                                        <input type="text" name="" id="" value={pricePerUnitTo} />
+                                        <input type="text" name="" id="" value={pricePerUnitTo} onChange={(e: any) => setPricePerUnitTo(e.target.value)}/>
                                     </li>
                                     <li>
                                         Var : <span className="highlight"> {pricePerUnitVar}</span>
@@ -248,56 +252,58 @@ const ProductDetails = (props: any) => {
                             <Line data={chartGraphDataState} options={options} />
                         }
                     </div>
-                    <div className="data-column">
-                        <div className="price-effect">
-                            <div className="heading" onClick={priceEffectToggle}>
-                                <h3>Price effect</h3>
-                                {!priceEffectToggleState ? <FiPlus /> : <FiMinus />}
-                            </div>
-                            {priceEffectToggleState &&
-                                <div className="content">
-                                    {dataProd && dataProd.map((v: any, i: any) => (
-                                        <span className="item" key={i}>
-                                            {i + 1} <br />
-                                            <i>{v.priceEffect.toFixed(2)}</i>
-                                        </span>
-                                    ))}
+                    {chartGraphDataState &&
+                        <div className="data-column">
+                            <div className="price-effect">
+                                <div className="heading" onClick={priceEffectToggle}>
+                                    <h3>Price effect</h3>
+                                    {!priceEffectToggleState ? <FiPlus /> : <FiMinus />}
                                 </div>
-                            }
-                        </div>
-                        <div className="price-effect gram-effect">
-                            <div className="heading" onClick={gramEffectToggle}>
-                                <h3>Gram effect</h3>
-                                {!gramEffectToggleState ? <FiPlus /> : <FiMinus />}
+                                {priceEffectToggleState &&
+                                    <div className="content">
+                                        {dataProd && dataProd.map((v: any, i: any) => (
+                                            <span className="item" key={i}>
+                                                {i + 1} <br />
+                                                <i>{v.priceEffect.toFixed(2)}</i>
+                                            </span>
+                                        ))}
+                                    </div>
+                                }
                             </div>
-                            {gramEffectToggleState &&
-                                <div className="content">
-                                    {dataProd && dataProd.map((v: any, i: any) => (
-                                        <span className="item" key={i}>
-                                            {i + 1} <br />
-                                            <i>{v.gramEffect.toFixed(2)}</i>
-                                        </span>
-                                    ))}
+                            <div className="price-effect gram-effect">
+                                <div className="heading" onClick={gramEffectToggle}>
+                                    <h3>Gram effect</h3>
+                                    {!gramEffectToggleState ? <FiPlus /> : <FiMinus />}
                                 </div>
-                            }
-                        </div>
-                        <div className="price-effect total-effect">
-                            <div className="heading" onClick={totalEffectToggle}>
-                                <h3>Total effect</h3>
-                                {!totalEffectToggleState ? <FiPlus /> : <FiMinus />}
+                                {gramEffectToggleState &&
+                                    <div className="content">
+                                        {dataProd && dataProd.map((v: any, i: any) => (
+                                            <span className="item" key={i}>
+                                                {i + 1} <br />
+                                                <i>{v.gramEffect.toFixed(2)}</i>
+                                            </span>
+                                        ))}
+                                    </div>
+                                }
                             </div>
-                            {totalEffectToggleState &&
-                                <div className="content">
-                                    {dataProd && dataProd.map((v: any, i: any) => (
-                                        <span className="item" key={i}>
-                                            {i + 1} <br />
-                                            <i>{v.totalEffect.toFixed(2)}</i>
-                                        </span>
-                                    ))}
+                            <div className="price-effect total-effect">
+                                <div className="heading" onClick={totalEffectToggle}>
+                                    <h3>Total effect</h3>
+                                    {!totalEffectToggleState ? <FiPlus /> : <FiMinus />}
                                 </div>
-                            }
+                                {totalEffectToggleState &&
+                                    <div className="content">
+                                        {dataProd && dataProd.map((v: any, i: any) => (
+                                            <span className="item" key={i}>
+                                                {i + 1} <br />
+                                                <i>{v.totalEffect.toFixed(2)}</i>
+                                            </span>
+                                        ))}
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

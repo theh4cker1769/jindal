@@ -23,7 +23,7 @@ const AdjustableFilters = (props: any) => {
             setModelPriceElasticity(props.dataProdDetails[0].modelPriceElasticity)
             setModelGramElasticity(props.dataProdDetails[0].modelGramsElasticityCurve)
         }
-    })
+    }, [props.dataProdDetails])
 
     const [selectedOptionPrice, setSelectedOptionPrice] = useState<any>();
     const handleOptionChangePrice = (event: any) => {
@@ -71,11 +71,11 @@ const AdjustableFilters = (props: any) => {
                     <div className="bodyRightList">
                         <div className="item">
                             <h6>Price elasticity expected</h6>
-                            <input type="text" value={priceElasticityExpected} />
+                            <input type="text" value={priceElasticityExpected} onChange={(e: any) => setPriceElasticityExpected(e.target.value)}/>
                         </div>
                         <div className="item">
                             <h6>Gram elasticity expected</h6>
-                            <input type="text" value={gramsElasticityExpected} />
+                            <input type="text" value={gramsElasticityExpected} onChange={(e: any) => setGramsElasticityExpected(e.target.value)} />
                         </div>
                         <div className="item">
                             <div className="filter-radio">

@@ -429,6 +429,7 @@ const Filter = (props: any) => {
         setSelectedPermutation(selectedOptions);
         setProductLoad(selectedOptions)
     };
+    console.log(selectedPermutation)
 
     const applyFilter = () => {
         props.sendProductData(productLoad, startDate, allFilterValues)
@@ -626,7 +627,7 @@ const Filter = (props: any) => {
                 <DatePicker selected={startDate} onChange={(date: any) => setStartDate(date)} dateFormat="dd-MM-yyyy" />
                 <LuCalendarCheck2 />
             </div>
-            <button className="filterBtn" type="button" onClick={applyFilter}>Apply</button>
+            <button className={`filterBtn ${selectedPermutation.length > 0 ? '' : 'disabled'}`} type="button" onClick={applyFilter} disabled={selectedPermutation.length > 0 ? false : true}>Apply</button>
         </section>
 
     )
