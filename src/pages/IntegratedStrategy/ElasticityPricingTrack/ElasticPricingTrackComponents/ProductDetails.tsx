@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import RealvsExpected from './RealvsExpected'
 import { Line } from 'react-chartjs-2'
 import { Chart, registerables } from 'chart.js';
 import { FiPlus, FiMinus } from "react-icons/fi";
@@ -59,7 +60,7 @@ const ProductDetails = (props: any) => {
     const [chartGraphDataState, setChartGraphDataState] = useState<any>()
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMjcyMzg2LCJleHAiOjE3MDIzNTg3ODYsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjI3MjM4Nn0.abc-o-WYklsnkePwNarw-KvaxvRH4XHzDrifjoV10E4';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMzYwMTE5LCJleHAiOjE3MDI0NDY1MTksImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjM2MDExOX0.6tzg1J7HKI2CHhDP5UAMPzyjFL6me53LEehVoOr8mD0';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/unitvariationsexpected';
         const payload = {
             "country": "AUSTRALIA",
@@ -189,7 +190,7 @@ const ProductDetails = (props: any) => {
                 Units Variation Expected
             </h3>
 
-            <div className="graph-card card mt-3 mb-5">
+            <div className="graph-card card mt-3 mb-3">
                 <div className="card-header py-0 px-2">
                     <div className="row align-items-start">
                         <div className="col-md-12">
@@ -224,7 +225,7 @@ const ProductDetails = (props: any) => {
                                             Price Per <br />
                                             Pack To
                                         </label>
-                                        <input type="text" name="" id="" value={pricePerUnitTo} onChange={(e: any) => setPricePerUnitTo(e.target.value)}/>
+                                        <input type="text" name="" id="" value={pricePerUnitTo} onChange={(e: any) => setPricePerUnitTo(e.target.value)} />
                                     </li>
                                     <li>
                                         Var : <span className="highlight"> {pricePerUnitVar}</span>
@@ -305,7 +306,9 @@ const ProductDetails = (props: any) => {
                         </div>
                     }
                 </div>
+                
             </div>
+            <RealvsExpected/>
         </div>
     )
 }

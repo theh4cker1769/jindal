@@ -393,3 +393,16 @@
     border-bottom: 1px solid #7269ff;
     border-right: 1px solid #7269ff;
 }
+
+/* Real vs Expected */
+
+.realvsexpected {
+    margin: 10px;
+    margin-bottom: 60px;
+}
+
+.realvsexpected .card-header h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 0;
+}

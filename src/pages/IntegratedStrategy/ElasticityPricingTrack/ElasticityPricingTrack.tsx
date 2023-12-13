@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Filter from "./Filter"
-import Products from "./Products"
-import ProductDetails from "./ProductDetails"
-import AdjustableFilters from "./AdjustableFilters"
+import Filter from "./ElasticPricingTrackComponents/Filter"
+import Products from "./ElasticPricingTrackComponents/Products"
+import ProductDetails from "./ElasticPricingTrackComponents/ProductDetails"
+import AdjustableFilters from "./ElasticPricingTrackComponents/AdjustableFilters"
 
 const ElasticityPricingTrack = () => {
 

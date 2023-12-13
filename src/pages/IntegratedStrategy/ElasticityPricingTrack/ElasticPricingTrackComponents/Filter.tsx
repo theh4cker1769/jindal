@@ -21,24 +21,24 @@ const Filter = (props: any) => {
         { value: 'Product Filters', label: 'Product Filters' }
     ]
 
-    const geoFilters = {
-        country: [
-            { value: 'AUSTRALIA', label: 'AUSTRALIA' }
-        ],
-        geoLevel: [
-            { value: '4A', label: '4A' }
-        ],
-        channel: [
-            { value: 'ALL', label: 'ALL' },
-            { value: 'GROCERY', label: 'GROCERY' },
-            { value: 'PHARMACY', label: 'PHARMACY' }
-        ],
-        geoLevel2: [
-            { value: '4A-RTLR-CHEMIST_WHS', label: '4A-RTLR-CHEMIST_WHS' },
-            { value: '4A-RTLR-COLES', label: '4A-RTLR-COLES' },
-            { value: '4A-RTLR-WOOLWORTHS', label: '4A-RTLR-WOOLWORTHS' }
-        ]
-    }
+    // const geoFilters = {
+    //     country: [
+    //         { value: 'AUSTRALIA', label: 'AUSTRALIA' }
+    //     ],
+    //     geoLevel: [
+    //         { value: '4A', label: '4A' }
+    //     ],
+    //     channel: [
+    //         { value: 'ALL', label: 'ALL' },
+    //         { value: 'GROCERY', label: 'GROCERY' },
+    //         { value: 'PHARMACY', label: 'PHARMACY' }
+    //     ],
+    //     geoLevel2: [
+    //         { value: '4A-RTLR-CHEMIST_WHS', label: '4A-RTLR-CHEMIST_WHS' },
+    //         { value: '4A-RTLR-COLES', label: '4A-RTLR-COLES' },
+    //         { value: '4A-RTLR-WOOLWORTHS', label: '4A-RTLR-WOOLWORTHS' }
+    //     ]
+    // }
 
     const productFilters = {
         category: [
@@ -435,6 +435,38 @@ const Filter = (props: any) => {
         props.sendProductData(productLoad, startDate, allFilterValues)
     }
 
+    const [geoLevel2, setGeoLevel2] = useState<any>()
+
+    const fetchDataGeoLevel = async () => {
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMzU5NTYxLCJleHAiOjE3MDIzNjY3NjEsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjM1OTU2MX0.uiRoYRZKzFI4diW2uqmxhsVgG5Xyl4QOx5njL9xJAjI';
+        const url = 'http://localhost:81/api/configuration/GetDropDownItems/5';
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const result = await response.json()
+                setGeoLevel2(result)
+                console.log("test", result)
+            } else {
+                console.error('Failed to fetch data');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+
+    }
+
+    useEffect(() => {
+        fetchDataGeoLevel()
+    }, [])
+
+
+
     return (
         <section className="filter-main">
             <ul className="filter-List table-responsive">
@@ -452,7 +484,7 @@ const Filter = (props: any) => {
                 </li>
                 {selectedValue == "Geo-Filters" &&
                     <>
-                        <li>
+                        {/* <li>
                             <Select
                                 className="basic-single"
                                 classNamePrefix="select"
@@ -483,17 +515,21 @@ const Filter = (props: any) => {
                                 placeholder={'Channel'}
                                 menuPortalTarget={document.querySelector('body')}
                             />
-                        </li>
-                        <li>
-                            <Select
-                                className="basic-single"
-                                classNamePrefix="select"
-                                isSearchable={true}
-                                options={geoFilters.geoLevel2}
-                                placeholder={'Geo-Level 2'}
-                                menuPortalTarget={document.querySelector('body')}
-                            />
-                        </li>
+                        </li>*/
+                            <li>
+                                <Select
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    isSearchable={true}
+                                    options={geoLevel2}
+                                    getOptionLabel={(option:any) => option.lkP_DESCRIPTION}
+                                    getOptionValue={(option:any) => option.lkP_DESCRIPTION}
+                                    placeholder={'Geo-Level 2'}
+                                    menuPortalTarget={document.querySelector('body')}
+                                />
+                            </li>
+
+                        }
                     </>
                 }
 
