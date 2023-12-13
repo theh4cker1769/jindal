@@ -3,13 +3,13 @@ import { Bar } from 'react-chartjs-2'
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables);
 
-const RealvsExpected = () => {
+const RealvsExpected = (props: any) => {
 
     const [dataProd, setDataProd] = useState<any>()
     const [chartGraphDataState, setChartGraphDataState] = useState<any>()
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMzYwMTE5LCJleHAiOjE3MDI0NDY1MTksImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjM2MDExOX0.6tzg1J7HKI2CHhDP5UAMPzyjFL6me53LEehVoOr8mD0';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyNDQ5NTkxLCJleHAiOjE3MDI1MzU5OTEsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjQ0OTU5MX0.D-PvrNKTpYGED_9MCcwd0NzGFTvaUC2A2BGUPRZQl_w';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/realvsexpected';
         const payload = {
             "country": "AUSTRALIA",
@@ -75,6 +75,8 @@ const RealvsExpected = () => {
             "variationType": "unit"
         }
 
+        // const payload = props.payloadData
+
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -86,7 +88,7 @@ const RealvsExpected = () => {
             });
             if (response.ok) {
                 const result = await response.json()
-                console.log(result.brands[0].child[0].weekData1)
+                console.log(dataProd)
                 setDataProd(result.brands[0].child[0].weekData1)
                 const chartGraphData = {
                     labels: dataProd.map((data: any) => data.date),
@@ -112,8 +114,13 @@ const RealvsExpected = () => {
     }
 
     useEffect(() => {
-        fetchData();
-    })
+        if (props.selectProd) {
+            fetchData();
+        }
+        if (props.adjustableFiltersData.length > 0) {
+            fetchData();
+        }
+    }, [props.selectProd, props.adjustableFiltersData])
 
     return (
         <div className='realvsexpected card'>

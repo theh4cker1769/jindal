@@ -429,7 +429,6 @@ const Filter = (props: any) => {
         setSelectedPermutation(selectedOptions);
         setProductLoad(selectedOptions)
     };
-    console.log(selectedPermutation)
 
     const applyFilter = () => {
         props.sendProductData(productLoad, startDate, allFilterValues)
@@ -437,9 +436,15 @@ const Filter = (props: any) => {
 
     const [geoLevel2, setGeoLevel2] = useState<any>()
 
-    const fetchDataGeoLevel = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyMzU5NTYxLCJleHAiOjE3MDIzNjY3NjEsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjM1OTU2MX0.uiRoYRZKzFI4diW2uqmxhsVgG5Xyl4QOx5njL9xJAjI';
-        const url = 'http://localhost:81/api/configuration/GetDropDownItems/5';
+
+    const [parentKey, setParentKey] = useState<any>('COUNTRY')
+    const [multipleChildItems, setMultipleChildItems] = useState<any>('COUNTRY')
+    const [resultData, setResultData] = useState<any>()
+
+    const fetchData = async (type: string) => {
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyNDg4OTE0LCJleHAiOjE3MDI0OTYxMTQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjQ4ODkxNH0.Ao-hvbbiyi-b9Jmofa6SdABB2gZfpOp7nFbF1BhZhzM';
+        const url = `http://localhost:81/api/configuration/GetDropDownItems/${parentKey}/${multipleChildItems}`
+
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -447,25 +452,114 @@ const Filter = (props: any) => {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
-            });
+            })
             if (response.ok) {
                 const result = await response.json()
-                setGeoLevel2(result)
-                console.log("test", result)
+                if (type == 'initial') {
+                    setResultData(result)
+                } else if (type == 'Geo-Level') {
+                    setGeoLevelData(result)
+                } else if (type == "Channel") {
+                    setChannelData(result)
+                } else if (type == "geoLevel2") {
+                    setGeolevel2Data(result)
+                } else {
+                    console.log("select")
+                }
             } else {
                 console.error('Failed to fetch data');
             }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-
     }
 
     useEffect(() => {
-        fetchDataGeoLevel()
+        fetchData('initial')
     }, [])
 
 
+    // Country
+    const [countryData, setCountryData] = useState<any>()
+    const [countryDataVal, setCountryDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (resultData) {
+            const countryActData: any = { value: resultData[0].lkP_DESCRIPTION, label: resultData[0].lkP_DESCRIPTION }
+            setCountryData([countryActData])
+            setTimeout(() => {
+                setCountryDataVal(countryActData.value)
+            }, 1000)
+        }
+    }, [resultData])
+
+
+    // Geo-Level 
+    const [geoLevelData, setGeoLevelData] = useState<any>()
+    const [geoLevelDataVal, setGeoLevelDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (countryDataVal) {
+            setParentKey('GEO_LEVEL')
+            setMultipleChildItems(countryDataVal)
+        }
+    }, [countryDataVal])
+
+    useEffect(() => {
+        if (parentKey == 'GEO_LEVEL') {
+            fetchData('Geo-Level')
+        }
+    }, [parentKey, multipleChildItems])
+
+    const geolevel = (selectedOption:any) => {
+        setGeoLevelDataVal(selectedOption.lkP_DESCRIPTION)
+    }
+
+
+    // Channel
+    const [channelData, setChannelData] = useState<any>()
+    const [channelDataVal, setChannelDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (geoLevelDataVal) {
+            setParentKey('CHANNEL')
+            setMultipleChildItems(geoLevelDataVal)
+        }
+    }, [geoLevelDataVal])
+
+    useEffect(() => {
+        if (parentKey == 'CHANNEL') {
+            fetchData('Channel')
+        }
+    }, [parentKey, multipleChildItems])
+
+    const channel = (selectedOption:any) => {
+        setChannelDataVal(selectedOption)
+    }
+
+
+    // Geo-Level 2
+    const [geolevel2Data, setGeolevel2Data] = useState<any>()
+    const [geolevel2DataVal, setGeolevel2DataVal] = useState<any>()
+
+    useEffect(() => {
+        if (channelDataVal) {
+            setParentKey('GEO_LEVEL2')
+            const channelSelectVal = channelDataVal.map((item:any) => item.lkP_DESCRIPTION)
+            const channelSelectValString = channelSelectVal.join(',');
+            setMultipleChildItems(channelSelectValString)
+        }
+    }, [channelDataVal])
+
+    useEffect(() => {
+        if (parentKey == 'GEO_LEVEL2') {
+            fetchData('geoLevel2')
+        }
+    }, [parentKey, multipleChildItems])
+
+    const geolevel2 = (selectedOption:any) => {
+        geolevel2DataVal(selectedOption)
+    }
 
     return (
         <section className="filter-main">
@@ -484,16 +578,16 @@ const Filter = (props: any) => {
                 </li>
                 {selectedValue == "Geo-Filters" &&
                     <>
-                        {/* <li>
+                        <li>
                             <Select
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isDisabled={true}
                                 isSearchable={true}
-                                options={geoFilters.country}
+                                options={countryData}
                                 placeholder={'Country'}
                                 menuPortalTarget={document.querySelector('body')}
-                                defaultValue={{ value: 'AUSTRALIA', label: 'AUSTRALIA' }}
+                                value={countryData && countryData[0]}
                             />
                         </li>
                         <li>
@@ -501,9 +595,12 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={geoFilters.geoLevel}
+                                options={geoLevelData}
+                                getOptionLabel={(options: any) => options.lkP_DESCRIPTION}
+                                getOptionValue={(options: any) => options.lkP_DESCRIPTION}
                                 placeholder={'Geo-Level'}
                                 menuPortalTarget={document.querySelector('body')}
+                                onChange={geolevel}
                             />
                         </li>
                         <li>
@@ -511,25 +608,35 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={geoFilters.channel}
+                                options={channelData}
+                                getOptionLabel={(options: any) => options.lkP_DESCRIPTION}
+                                getOptionValue={(options: any) => options.lkP_DESCRIPTION}
                                 placeholder={'Channel'}
                                 menuPortalTarget={document.querySelector('body')}
+                                onChange={channel}
+                                isMulti
+                                components={{
+                                    Option: InputOption
+                                }}
+                                closeMenuOnSelect={false}
+                                hideSelectedOptions={false}
+                                controlShouldRenderValue={false}
                             />
-                        </li>*/
-                            <li>
-                                <Select
-                                    className="basic-single"
-                                    classNamePrefix="select"
-                                    isSearchable={true}
-                                    options={geoLevel2}
-                                    getOptionLabel={(option:any) => option.lkP_DESCRIPTION}
-                                    getOptionValue={(option:any) => option.lkP_DESCRIPTION}
-                                    placeholder={'Geo-Level 2'}
-                                    menuPortalTarget={document.querySelector('body')}
-                                />
-                            </li>
+                        </li>
+                        <li>
+                            <Select
+                                className="basic-single"
+                                classNamePrefix="select"
+                                isSearchable={true}
+                                options={geolevel2Data}
+                                getOptionLabel={(option: any) => option.lkP_DESCRIPTION}
+                                getOptionValue={(option: any) => option.lkP_DESCRIPTION}
+                                placeholder={'Geo-Level 2'}
+                                menuPortalTarget={document.querySelector('body')}
+                                onChange={geolevel2}
+                            />
+                        </li>
 
-                        }
                     </>
                 }
 
