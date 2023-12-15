@@ -41,7 +41,7 @@ const Header = (props: { toggleSidebarProp: () => void }) => {
                         </li>
                         <li className="nav-item">
                             <div className="media">
-                                <img src="/images/avtar.svg" className="mr-3" alt="..." />
+                                <img src="/images/avtar.svg" className="mr-1" alt="..." />
                                 <div className="media-body">
                                     <h6 className="mt-0">kumar Saurabh</h6>
                                     21 June 2023, 16:40

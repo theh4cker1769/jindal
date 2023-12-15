@@ -5741,6 +5741,12 @@ a.badge-dark.focus {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  margin-top: 10px;
+}
+
+.media-body h6 {
+  margin-bottom: 0;
+  font-weight: 600;
 }
 
 .list-group {
@@ -11028,7 +11034,7 @@ a[data-toggle="collapse"] {
 }
 
 .headerUL li {
-  padding: 0 20px;
+  padding: 0 10px;
   border-left: 1px solid #57575780;
 }
 

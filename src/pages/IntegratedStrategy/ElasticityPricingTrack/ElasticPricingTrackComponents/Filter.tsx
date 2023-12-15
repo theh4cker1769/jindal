@@ -21,25 +21,6 @@ const Filter = (props: any) => {
         { value: 'Product Filters', label: 'Product Filters' }
     ]
 
-    // const geoFilters = {
-    //     country: [
-    //         { value: 'AUSTRALIA', label: 'AUSTRALIA' }
-    //     ],
-    //     geoLevel: [
-    //         { value: '4A', label: '4A' }
-    //     ],
-    //     channel: [
-    //         { value: 'ALL', label: 'ALL' },
-    //         { value: 'GROCERY', label: 'GROCERY' },
-    //         { value: 'PHARMACY', label: 'PHARMACY' }
-    //     ],
-    //     geoLevel2: [
-    //         { value: '4A-RTLR-CHEMIST_WHS', label: '4A-RTLR-CHEMIST_WHS' },
-    //         { value: '4A-RTLR-COLES', label: '4A-RTLR-COLES' },
-    //         { value: '4A-RTLR-WOOLWORTHS', label: '4A-RTLR-WOOLWORTHS' }
-    //     ]
-    // }
-
     const productFilters = {
         category: [
             {
@@ -379,70 +360,26 @@ const Filter = (props: any) => {
         permutation: selectedPermutation
     }
 
-    const handleCategory = (selectedOptions: any) => {
-        setSelectedCategory(selectedOptions);
-
-        setSelectedSegment([]);
-
-        setSelectedBrand([]);
-        setSelectedSubBrand([]);
-        setSelectedPackSize([]);
-        setSelectedPermutation([]);
-    };
-
-    const handleSegment = (selectedOptions: any) => {
-        setSelectedSegment(selectedOptions);
-
-        setSelectedBrand([]);
-
-        setSelectedSubBrand([]);
-        setSelectedPackSize([]);
-        setSelectedPermutation([]);
-    };
-
-    const handleBrand = (selectedOptions: any) => {
-        setSelectedBrand(selectedOptions);
-
-        setSelectedSubBrand([]);
-
-        setSelectedPackSize([]);
-        setSelectedPermutation([]);
-    };
-
-    const handleSubBrand = (selectedOptions: any) => {
-        setSelectedSubBrand(selectedOptions);
-
-        setSelectedPackSize([]);
-
-        setSelectedPermutation([]);
-    };
-
-    const handlePackSize = (selectedOptions: any) => {
-        setSelectedPackSize(selectedOptions);
-
-        setSelectedPermutation([]);
-    };
-
     const [productLoad, setProductLoad] = useState<any>([])
 
-    const handlePermutation = (selectedOptions: any) => {
-        setSelectedPermutation(selectedOptions);
-        setProductLoad(selectedOptions)
-    };
+    // const handlePermutation = (selectedOptions: any) => {
+    //     setSelectedPermutation(selectedOptions);
+    //     setProductLoad(selectedOptions)
+    // };
 
     const applyFilter = () => {
         props.sendProductData(productLoad, startDate, allFilterValues)
     }
 
-    const [geoLevel2, setGeoLevel2] = useState<any>()
 
+    // Geo Filters
 
     const [parentKey, setParentKey] = useState<any>('COUNTRY')
     const [multipleChildItems, setMultipleChildItems] = useState<any>('COUNTRY')
     const [resultData, setResultData] = useState<any>()
 
     const fetchData = async (type: string) => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyNDg4OTE0LCJleHAiOjE3MDI0OTYxMTQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjQ4ODkxNH0.Ao-hvbbiyi-b9Jmofa6SdABB2gZfpOp7nFbF1BhZhzM';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyNjY4ODE0LCJleHAiOjE3MDI2NzYwMTQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjY2ODgxNH0.Tws51pNHtJMQvkAcx3ZqtpoFSivtzGmgI_cOUbuUPfw';
         const url = `http://localhost:81/api/configuration/GetDropDownItems/${parentKey}/${multipleChildItems}`
 
         try {
@@ -458,11 +395,14 @@ const Filter = (props: any) => {
                 if (type == 'initial') {
                     setResultData(result)
                 } else if (type == 'Geo-Level') {
-                    setGeoLevelData(result)
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setGeoLevelData(data)
                 } else if (type == "Channel") {
-                    setChannelData(result)
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setChannelData(data)
                 } else if (type == "geoLevel2") {
-                    setGeolevel2Data(result)
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setGeolevel2Data(data)
                 } else {
                     console.log("select")
                 }
@@ -511,8 +451,8 @@ const Filter = (props: any) => {
         }
     }, [parentKey, multipleChildItems])
 
-    const geolevel = (selectedOption:any) => {
-        setGeoLevelDataVal(selectedOption.lkP_DESCRIPTION)
+    const geolevel = (selectedOption: any) => {
+        setGeoLevelDataVal(selectedOption.value)
     }
 
 
@@ -533,7 +473,7 @@ const Filter = (props: any) => {
         }
     }, [parentKey, multipleChildItems])
 
-    const channel = (selectedOption:any) => {
+    const channel = (selectedOption: any) => {
         setChannelDataVal(selectedOption)
     }
 
@@ -545,7 +485,7 @@ const Filter = (props: any) => {
     useEffect(() => {
         if (channelDataVal) {
             setParentKey('GEO_LEVEL2')
-            const channelSelectVal = channelDataVal.map((item:any) => item.lkP_DESCRIPTION)
+            const channelSelectVal = channelDataVal.map((item: any) => item.value)
             const channelSelectValString = channelSelectVal.join(',');
             setMultipleChildItems(channelSelectValString)
         }
@@ -557,9 +497,206 @@ const Filter = (props: any) => {
         }
     }, [parentKey, multipleChildItems])
 
-    const geolevel2 = (selectedOption:any) => {
-        geolevel2DataVal(selectedOption)
+    const geolevel2 = (selectedOption: any) => {
+        setGeolevel2DataVal(selectedOption.value)
     }
+
+    // All GeoFilter Values
+
+    const allGeoFilterValues = {
+        country: countryDataVal,
+        geoLevel: geoLevelDataVal,
+        channel: channelDataVal,
+        geoLevel2: geolevel2DataVal,
+    }
+
+
+    // Product Filters
+
+    const [parentKeyProduct, setParentKeyProduct] = useState<any>('PRODUCT_CATEGORY')
+    const [multipleChildItemsProduct, setMultipleChildItemsProduct] = useState<any>('PRODUCT_CATEGORY')
+    const [resultDataProduct, setResultDataProduct] = useState<any>()
+
+    const fetchDataProduct = async (type: string) => {
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyNjY4ODE0LCJleHAiOjE3MDI2NzYwMTQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjY2ODgxNH0.Tws51pNHtJMQvkAcx3ZqtpoFSivtzGmgI_cOUbuUPfw';
+        const url = `http://localhost:81/api/configuration/GetDropDownItems/${parentKeyProduct}/${multipleChildItemsProduct}`
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (response.ok) {
+                const result = await response.json()
+                if (type == 'initialProduct') {
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setResultDataProduct(data)
+                } else if (type == 'PRODUCT_SEGMENT') {
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setProductSegmentData(data)
+                } else if (type == 'PRODUCT_BRAND') {
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setProductBrandData(data)
+                } else if (type == 'PRODUCT_SUB_BRAND') {
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setProductSubBrandData(data)
+                } else if (type == 'PRODUCT_PACK_SIZE') {
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setProductPackSizeData(data)
+                } else if (type == 'PRODUCT_PERMUTATION_COMPUTAION') {
+                    const data = result.map((v: any) => ({ value: v.lkP_DESCRIPTION, label: v.lkP_DESCRIPTION, }))
+                    setProductPermutationData(data)
+                }
+            } else {
+                console.error('Failed to fetch data');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchDataProduct('initialProduct')
+    }, [])
+
+
+    // product category
+    const [productCategoryData, setProductCategoryData] = useState<any>()
+    const [productCategoryDataVal, setProductCategoryDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (resultDataProduct) {
+            setProductCategoryData(resultDataProduct)
+        }
+    }, [resultDataProduct])
+
+    const handleCategory = (selectedValue: any) => {
+        setProductCategoryDataVal(selectedValue)
+    }
+
+
+    // product segment 
+    const [productSegmentData, setProductSegmentData] = useState<any>()
+    const [productSegmentDataVal, setProductSegmentDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (productCategoryDataVal) {
+            setParentKeyProduct('PRODUCT_SEGMENT')
+            const main = productCategoryDataVal.map((item: any) => item.value)
+            const string = main.join(',');
+            setMultipleChildItemsProduct(string)
+        }
+    }, [productCategoryDataVal])
+
+    useEffect(() => {
+        if(parentKeyProduct == 'PRODUCT_SEGMENT') {
+            fetchDataProduct('PRODUCT_SEGMENT')
+        }
+    }, [parentKeyProduct, multipleChildItemsProduct])
+
+    const handleSegment = (selectedValue: any) => {
+        setProductSegmentDataVal(selectedValue)
+    }
+
+
+    // product brand 
+    const [productBrandData, setProductBrandData] = useState<any>()
+    const [productBrandDataVal, setProductBrandtDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (productSegmentDataVal) {
+            setParentKeyProduct('PRODUCT_BRAND')
+            const main = productSegmentDataVal.map((item: any) => item.value)
+            const string = main.join(',');
+            setMultipleChildItemsProduct(string)
+        }
+    }, [productSegmentDataVal])
+
+    useEffect(() => {
+        if(parentKeyProduct == 'PRODUCT_BRAND') {
+            fetchDataProduct('PRODUCT_BRAND')
+        }
+    }, [parentKeyProduct, multipleChildItemsProduct])
+
+    const handleBrand = (selectedValue: any) => {
+        setProductBrandtDataVal(selectedValue)
+    }
+
+
+    // product sub brand 
+    const [productSubBrandData, setProductSubBrandData] = useState<any>()
+    const [productSubBrandDataVal, setProductSubBrandDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (productBrandDataVal) {
+            setParentKeyProduct('PRODUCT_SUB_BRAND')
+            const main = productBrandDataVal.map((item: any) => item.value)
+            const string = main.join(',');
+            setMultipleChildItemsProduct(string)
+        }
+    }, [productBrandDataVal])
+
+    useEffect(() => {
+        if(parentKeyProduct == 'PRODUCT_SUB_BRAND') {
+            fetchDataProduct('PRODUCT_SUB_BRAND')
+        }
+    }, [parentKeyProduct, multipleChildItemsProduct])
+
+    const handleSubBrand = (selectedValue: any) => {
+        setProductSubBrandDataVal(selectedValue)
+    }
+
+
+    // product pack size
+    const [productPackSizeData, setProductPackSizeData] = useState<any>()
+    const [productPackSizeDataVal, setProductPackSizeDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (productSubBrandDataVal) {
+            setParentKeyProduct('PRODUCT_PACK_SIZE')
+            const main = productSubBrandDataVal.map((item: any) => item.value)
+            const string = main.join(',');
+            setMultipleChildItemsProduct(string)
+        }
+    }, [productSubBrandDataVal])
+
+    useEffect(() => {
+        if(parentKeyProduct == 'PRODUCT_PACK_SIZE') {
+            fetchDataProduct('PRODUCT_PACK_SIZE')
+        }
+    }, [parentKeyProduct, multipleChildItemsProduct])
+
+    const handlePackSize = (selectedValue: any) => {
+        setProductPackSizeDataVal(selectedValue)
+    }
+
+
+    // product permutation
+    const [productPermutationData, setProductPermutationData] = useState<any>()
+    const [productPermutationDataVal, setProductPermutationDataVal] = useState<any>()
+
+    useEffect(() => {
+        if (productPackSizeDataVal) {
+            setParentKeyProduct('PRODUCT_PERMUTATION_COMPUTAION')
+            const main = productPackSizeDataVal.map((item: any) => item.value)
+            const string = main.join(',');
+            setMultipleChildItemsProduct(string)
+        }
+    }, [productPackSizeDataVal])
+
+    useEffect(() => {
+        if(parentKeyProduct == 'PRODUCT_PERMUTATION_COMPUTAION') {
+            fetchDataProduct('PRODUCT_PERMUTATION_COMPUTAION')
+        }
+    }, [parentKeyProduct, multipleChildItemsProduct])
+
+    const handlePermutation = (selectedValue: any) => {
+        setProductPermutationDataVal(selectedValue)
+    }
+
 
     return (
         <section className="filter-main">
@@ -573,6 +710,7 @@ const Filter = (props: any) => {
                         options={mainOptions}
                         menuPortalTarget={document.querySelector('body')}
                         onChange={handleChange}
+                        isClearable={false}
                         defaultValue={{ value: 'Geo-Filters', label: 'Geo-Filters' }}
                     />
                 </li>
@@ -586,6 +724,7 @@ const Filter = (props: any) => {
                                 isSearchable={true}
                                 options={countryData}
                                 placeholder={'Country'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 value={countryData && countryData[0]}
                             />
@@ -596,9 +735,11 @@ const Filter = (props: any) => {
                                 classNamePrefix="select"
                                 isSearchable={true}
                                 options={geoLevelData}
-                                getOptionLabel={(options: any) => options.lkP_DESCRIPTION}
-                                getOptionValue={(options: any) => options.lkP_DESCRIPTION}
+                                value={geoLevelData && geoLevelData.filter(function (option: any) {
+                                    return option.value === geoLevelDataVal;
+                                })}
                                 placeholder={'Geo-Level'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 onChange={geolevel}
                             />
@@ -609,9 +750,9 @@ const Filter = (props: any) => {
                                 classNamePrefix="select"
                                 isSearchable={true}
                                 options={channelData}
-                                getOptionLabel={(options: any) => options.lkP_DESCRIPTION}
-                                getOptionValue={(options: any) => options.lkP_DESCRIPTION}
+                                value={channelDataVal}
                                 placeholder={'Channel'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 onChange={channel}
                                 isMulti
@@ -629,9 +770,11 @@ const Filter = (props: any) => {
                                 classNamePrefix="select"
                                 isSearchable={true}
                                 options={geolevel2Data}
-                                getOptionLabel={(option: any) => option.lkP_DESCRIPTION}
-                                getOptionValue={(option: any) => option.lkP_DESCRIPTION}
+                                value={geolevel2Data && geolevel2Data.filter(function (option: any) {
+                                    return option.value === geolevel2DataVal;
+                                })}
                                 placeholder={'Geo-Level 2'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 onChange={geolevel2}
                             />
@@ -647,10 +790,11 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={productFilters.category}
-                                value={selectedCategory}
+                                options={productCategoryData}
+                                value={productCategoryDataVal}
                                 onChange={handleCategory}
                                 placeholder={'Category (KCA)'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 isMulti
                                 components={{
@@ -667,10 +811,11 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={selectedCategory.flatMap((v: any) => v.segment || [])}
-                                value={selectedSegment}
+                                options={productSegmentData}
+                                value={productSegmentDataVal}
                                 onChange={handleSegment}
                                 placeholder={'Segment (KCA)'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 isMulti
                                 components={{
@@ -687,10 +832,11 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={selectedSegment.flatMap((v: any) => v.brand || [])}
-                                value={selectedBrand}
+                                options={productBrandData}
+                                value={productBrandDataVal}
                                 onChange={handleBrand}
                                 placeholder={'Brand (KCA)'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 isMulti
                                 components={{
@@ -707,10 +853,11 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={selectedBrand.flatMap((v: any) => v.subBrand || [])}
-                                value={selectedSubBrand}
+                                options={productSubBrandData}
+                                value={productSubBrandDataVal}
                                 onChange={handleSubBrand}
                                 placeholder={'Sub Brand (KCA)'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 isMulti
                                 components={{
@@ -727,10 +874,11 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={selectedSubBrand.flatMap((v: any) => v.packSize || [])}
-                                value={selectedPackSize}
+                                options={productPackSizeData}
+                                value={productPackSizeDataVal}
                                 onChange={handlePackSize}
                                 placeholder={'Pack Size (KCA)'}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 isMulti
                                 components={{
@@ -747,10 +895,11 @@ const Filter = (props: any) => {
                                 className="basic-single"
                                 classNamePrefix="select"
                                 isSearchable={true}
-                                options={selectedPackSize.flatMap((v: any) => v.permutation || [])}
-                                value={selectedPermutation}
+                                options={productPermutationData}
+                                value={productPermutationDataVal}
                                 onChange={handlePermutation}
                                 placeholder={"Permutation Computing"}
+                                isClearable={false}
                                 menuPortalTarget={document.querySelector('body')}
                                 isMulti
                                 components={{
@@ -760,7 +909,6 @@ const Filter = (props: any) => {
                                 hideSelectedOptions={false}
                                 controlShouldRenderValue={false}
                                 styles={{ menuPortal: (base) => ({ ...base, fontSize: '12px' }) }}
-                            // onChange={handleChangeProduct}
                             />
                         </li>
                     </>
@@ -770,7 +918,7 @@ const Filter = (props: any) => {
                 <DatePicker selected={startDate} onChange={(date: any) => setStartDate(date)} dateFormat="dd-MM-yyyy" />
                 <LuCalendarCheck2 />
             </div>
-            <button className={`filterBtn ${selectedPermutation.length > 0 ? '' : 'disabled'}`} type="button" onClick={applyFilter} disabled={selectedPermutation.length > 0 ? false : true}>Apply</button>
+            <button className={`filterBtn ${productPermutationDataVal ? '' : 'disabled'}`} type="button" onClick={applyFilter} disabled={productPermutationDataVal ? false : true}>Apply</button>
         </section>
 
     )
