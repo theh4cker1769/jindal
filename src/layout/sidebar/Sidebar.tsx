@@ -1,6 +1,6 @@
 const Sidebar = (props: { sidebarActive: any }) => {
   return (
-    <nav id="sidebar" className={!props.sidebarActive ? 'active' : ''}>
+    <nav className={`sidebar ${!props.sidebarActive ? 'active' : ''}`}>
       <ul className="list-unstyled components mb-5">
         <li className="active">
           <a href="#">

@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.sidebar {
+    box-shadow: 0px 0px 6px 1px #ccc;
+    height: 100vh;
+}
+
 .filter-List {
     justify-content: flex-start;
     gap: 12px;
@@ -405,4 +410,103 @@
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 0;
+}
+
+/* Client Configurations */
+
+.client-configurations {
+    overflow: auto;
+    min-height: 100vh;
+    max-height: 100vh;
+    width: 100%;
+}
+
+.client-configurations .heading {
+    text-align: center;
+    padding: 14px 0;
+    font-size: 22px;
+}
+
+.client-configurations .main-box {
+    background-color: white;
+    margin: 26px;
+    padding: 32px;
+    margin-bottom: 100px;
+}
+
+.client-configurations .main-box .switch-box {
+    display: flex;
+    width: fit-content;
+    background-color: #f8f8f8;
+    padding: 12px 20px;
+    align-items: center;
+    box-shadow: 0px 0px 4px 0px #00000040;
+    border-radius: 6px;
+}
+
+.client-configurations .main-box .switch-box h6 {
+    margin-bottom: 0;
+    width: 190px;
+    border-right: 1px solid #b1b1b1;
+}
+
+.client-configurations .main-box .switch-box span {
+    color: #3700B3;
+    font-size: 12px;
+    padding: 0 10px;
+}
+
+.client-configurations .main-box .control-switch-sec {
+    display: flex;
+    gap: 30px;
+}
+
+.main-box .geo-location {
+    padding: 20px;
+}
+
+.main-box .geo-location h4 {
+    font-size: 20px;
+    color: #3700B3;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.main-box .geo-location .operator {
+    box-shadow: 0px 0px 4px 0px #00000040;
+}
+
+.main-box .geo-location .operator .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    padding: 14px 20px;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.main-box .geo-location .operator .item h6 {
+    margin-bottom: 0;
+}
+
+.main-box .geo-location .operator .item .switch-area {
+    display: flex;
+    align-items: center;
+    border-left: 1px solid #d3d3d3;
+}
+
+.main-box .geo-location .operator .item .switch-area span {
+    color: #3700B3;
+    font-size: 12px;
+    padding: 0 10px;
+}
+
+.main-box .client-con-btn {
+    font-size: 20px;
+    color: white;
+    background-color: #3700B3;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 20px;
+    margin-right: 20px;
 }

@@ -10644,7 +10644,7 @@ body {
   font-size: 14px;
   line-height: 1.8;
   font-weight: normal;
-  background: #fafafa;
+  background: #f7f7f7;
   color: #000;
 }
 
@@ -10746,7 +10746,7 @@ h5,
   width: 100%;
 }
 
-#sidebar {
+.sidebar {
   min-width: 270px;
   max-width: 270px;
   /* background: #7269ff; */
@@ -10756,29 +10756,29 @@ h5,
   -o-transition: all 0.3s;
   transition: all 0.3s;
 }
-#sidebar.active {
+.sidebar.active {
   min-width: 80px;
   max-width: 80px;
   text-align: center;
 }
-#sidebar.active ul.components li {
+.sidebar.active ul.components li {
   font-size: 14px;
 }
-#sidebar.active ul.components li a {
+.sidebar.active ul.components li a {
   padding: 10px 0;
 }
-#sidebar.active ul.components li a span {
+.sidebar.active ul.components li a span {
   margin-right: 0;
   display: none;
   /* font-size: 24px; */
 }
-#sidebar.active .logo {
+.sidebar.active .logo {
   padding: 10px 0;
 }
-#sidebar.active .footer {
+.sidebar.active .footer {
   display: none;
 }
-#sidebar .logo {
+.sidebar .logo {
   display: block;
   color: #fff;
   font-weight: 900;
@@ -10788,63 +10788,63 @@ h5,
   transition: 0.3s;
 }
 @media (prefers-reduced-motion: reduce) {
-  #sidebar .logo {
+  .sidebar .logo {
     -webkit-transition: none;
     -o-transition: none;
     transition: none;
   }
 }
-#sidebar ul.components {
+.sidebar ul.components {
   padding: 0;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
 }
 @media (prefers-reduced-motion: reduce) {
-  #sidebar ul.components {
+  .sidebar ul.components {
     -webkit-transition: none;
     -o-transition: none;
     transition: none;
   }
 }
-#sidebar ul li {
+.sidebar ul li {
   font-size: 16px;
 }
-#sidebar ul li > ul {
+.sidebar ul li > ul {
   margin-left: 10px;
 }
-#sidebar ul li > ul li {
+.sidebar ul li > ul li {
   font-size: 14px;
 }
-#sidebar ul li a {
+.sidebar ul li a {
   padding: 10px 30px;
   display: block;
   color: #000;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-#sidebar ul li a span {
+.sidebar ul li a span {
   margin-left: 15px;
 }
 @media (max-width: 991.98px) {
-  #sidebar ul li a span {
+  .sidebar ul li a span {
     display: block;
   }
 }
-#sidebar ul li a:hover {
+.sidebar ul li a:hover {
   color: #000;
 }
-#sidebar ul li.active > a {
+.sidebar ul li.active > a {
   background: transparent;
   color: #000;
 }
 @media (max-width: 991.98px) {
-  #sidebar {
+  .sidebar {
     min-width: 80px;
     max-width: 80px;
     text-align: center;
     margin-left: -80px !important;
   }
-  #sidebar.active {
+  .sidebar.active {
     margin-left: 0 !important;
   }
 }
@@ -10864,7 +10864,7 @@ a[data-toggle="collapse"] {
 }
 
 @media (max-width: 991.98px) {
-  #sidebarCollapse span {
+  .sidebarCollapse span {
     display: none;
   }
 }
