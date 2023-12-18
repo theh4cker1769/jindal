@@ -7,11 +7,36 @@ Chart.register(...registerables);
 
 const ProductDetails = (props: any) => {
 
+    const [measureFilters, setMesurableFilters] = useState<any>({
+        productName: "",
+        productInfo: "",
+        subBrandName: "",
+        packSize: "",
+        displayName: "",
+        pricePerUnitFrom: '',
+        pricePerUnitTo: '',
+        pricePerUnitVar: '',
+        gramPerUnitFrom: '',
+        gramPerUnitTo: '',
+        gramPerUnitVar: '',
+        priceElasticityExpected: '',
+        gramsElasticityExpected: '',
+        modelPriceElasticity: "",
+        modelGramsElasticityCurve: "",
+        date: "",
+        mixSellIn: '',
+        mixSellInBrandLevel: ''
+    })
+
+    useEffect(() => {
+        if (props.dataProdDetails.length > 0) {
+            setMesurableFilters(props.dataProdDetails)
+        }
+    }, props.dataProdDetails)
+
     const [pricePerUnitFrom, setPricePerUnitFrom] = useState()
     const [pricePerUnitTo, setPricePerUnitTo] = useState()
     const [pricePerUnitVar, setPricePerUnitVar] = useState()
-    const [filterDate, setFilterDate] = useState()
-    const [filterValue, setFilterValue] = useState<any>([])
 
     // Adjustable Filters
     const [adjustableFiltersData, setAdjustableFiltersData] = useState<any>({})
@@ -30,96 +55,117 @@ const ProductDetails = (props: any) => {
         }
     }, [props.dataProdDetails])
 
-    useEffect(() => {
-        if (props.filterDate) {
-            const day = props.filterDate.getDate().toString().padStart(2, '0');
-            const month = (props.filterDate.getMonth() + 1).toString().padStart(2, '0');
-            const year = props.filterDate.getFullYear();
-            const date: any = `${day}/${month}/${year}`
-            setFilterDate(date)
-        }
-    }, [props.filterDate])
 
-    useEffect(()=>{
-        if (props.filterValue) {
-            setFilterValue(props.filterValue)
-        }
-    }, [props.filterValue])
-
-
-    const [selectProd, setSelectProd] = useState<any>()
-
-    useEffect(() => {
-
-        const handleClickFirElem = () => {
-            setSelectProd(props.dataArray[0].value)
-        }
-
-        if (props.countFirstProd > 0) {
-            handleClickFirElem();
-        }
-
-    }, [props.countFirstProd]);
-
-    useEffect(() => {
-        setSelectProd(props.selectedProdState)
-    }, [props.selectedProdState])
 
     const [dataProd, setDataProd] = useState<any>()
     const [chartGraphDataState, setChartGraphDataState] = useState<any>()
-    const [payloadData, setPayloadData] = useState<any>()
+
+
+    // Filter Values
+    const [filterValues, setFilterValues] = useState<any>()
+    useEffect(() => {
+        if (props.filterValue) {
+            setFilterValues(props.filterValue)
+        }
+    }, [props.filterValue])
+
+    // All Payload State
+    const [country, setCountry] = useState<any>()
+    const [geoLevel, setGeoLevel] = useState<any>()
+    const [channel, setChannel] = useState<any>()
+    const [geoLevel2, setGeoLevel2] = useState<any>()
+    const [category, setCategory] = useState<any>()
+    const [segment, setSegment] = useState<any>()
+    const [brand, setBrand] = useState<any>()
+    const [subBrand, setSubBrand] = useState<any>()
+    const [packSize, setPackSize] = useState<any>()
+    const [permutation, setPermutation] = useState<any>()
+    const [date, setDate] = useState<any>()
+
+    useEffect(() => {
+        if (filterValues) {
+            if (filterValues.country) {
+                setCountry(filterValues.country)
+            }
+            if (filterValues.geoLevel) {
+                setGeoLevel(filterValues.geoLevel)
+            }
+            if (filterValues.channel) {
+                const channelArr = filterValues.channel.map((item: any) => item.value)
+                setChannel(channelArr)
+            }
+            if (filterValues.geoLevel2) {
+                setGeoLevel2(filterValues.geoLevel2)
+            }
+            if (filterValues.category) {
+                const categoryArr = filterValues.category.map((item: any) => item.value)
+                setCategory(categoryArr)
+            }
+            if (filterValues.segment) {
+                const segmentArr = filterValues.segment.map((item: any) => item.value)
+                setSegment(segmentArr)
+            }
+            if (filterValues.brand) {
+                const brandArr = filterValues.brand.map((item: any) => item.value)
+                setBrand(brandArr)
+            }
+            if (filterValues.subBrand) {
+                const subBrandArr = filterValues.subBrand.map((item: any) => item.value)
+                setSubBrand(subBrandArr)
+            }
+            if (filterValues.packSize) {
+                const packSizeArr = filterValues.packSize.map((item: any) => item.value)
+                setPackSize(packSizeArr)
+            }
+            if (filterValues.permutation) {
+                const permutationArr = filterValues.permutation.map((item: any) => item.value)
+                setPermutation(permutationArr)
+            }
+            if (filterValues.date) {
+                const date = filterValues.date
+                const day = date.getDate();
+                const month = date.getMonth() + 1;
+                const year = date.getFullYear();
+
+                const formattedDay = day < 10 ? `0${day}` : `${day}`;
+                const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+
+                const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+
+                setDate(formattedDate)
+            }
+        }
+    }, [filterValues])
+
+    const [activeIndex, setActiveIndex] = useState<any>(0)
+    useEffect(() => {
+        if (props.activeIndex) {
+            setActiveIndex(props.activeIndex)
+        }
+    }, [props.activeIndex])
+
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyNTQyMjUyLCJleHAiOjE3MDI2Mjg2NTIsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjU0MjI1Mn0.3vXE_hPFBBOxvCc0IzGss_UByHCbnTB1-bDlZM-5-aw';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyODc1NDc0LCJleHAiOjE3MDI5NjE4NzQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjg3NTQ3NH0.sQtqy2t7JDye91r9vYi8LcLPce87RHQ_q0mhNt_V3as';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/unitvariationsexpected';
         const payload = {
-            "country": "AUSTRALIA",
-            "geoLevel": [
-                "4A-RTLR"
-            ],
-            "channel": [
-                "GROCERY",
-                "PHARMACY"
-            ],
-            "geoLevel2": [
-                "4A-RTLR-WOOLWORTHS"
-            ],
-            "dataSource": "sellOut",
+            "country": country,
+            "geoLevel": [geoLevel],
+            "channel": channel,
+            "geoLevel2": [geoLevel2],
+            "category": category,
+            "segment": segment,
+            "brand": brand,
+            "subBrand": subBrand,
+            "packSize": packSize,
+            "permutation": [permutation[activeIndex]],
             "regions": null,
-            "category": filterValue.category.map((v: any) => v.value) || [],
-            "segment": filterValue.segment.map((v: any) => v.value) || [],
-            "brand": filterValue.brand.map((v: any) => v.value) || [],
-            "subBrand": filterValue.subBrand.map((v: any) => v.value) || [],
-            "packSize": filterValue.packSize.map((v: any) => v.value) || [],
-            "permutation": filterValue.permutation.map((v: any) => v.value) || [],
-            //selectProd
-            "measureFilters": [
-                {
-                    "productName": "HUGGIES",
-                    "productInfo": selectProd,
-                    "subBrandName": "HUGGIES ULTIMATE",
-                    "packSize": "JUMBO PK-WALKER NAP",
-                    "displayName": selectProd,
-                    "pricePerUnitFrom": pricePerUnitFrom,
-                    "pricePerUnitTo": pricePerUnitTo,
-                    "pricePerUnitVar": pricePerUnitVar,
-                    "gramPerUnitFrom": 52,
-                    "gramPerUnitTo": 52,
-                    "gramPerUnitVar": 0,
-                    "priceElasticityExpected": adjustableFiltersData.priceElasticityExpected,
-                    "gramsElasticityExpected": adjustableFiltersData.gramsElasticityExpected,
-                    "modelPriceElasticity": adjustableFiltersData.modelPriceElasticity,
-                    "modelGramsElasticityCurve": adjustableFiltersData.modelGramElasticity,
-                    "date": "06/11/2023",
-                    "mixSellIn": 1,
-                    "mixSellInBrandLevel": 1
-                }
-            ],
-            "date": "06/11/2023",
-            "pricingDate": "2023-02-01T00:00:00.000+05:30"
-        }
 
-        setPayloadData(payload)
+            //selectProd
+            "measureFilters": measureFilters,
+            "date": "06/11/2023",
+            "pricingDate": "2023-02-02T00:00:00.000+05:30"
+        }
 
         try {
             const response = await fetch(url, {
@@ -160,14 +206,11 @@ const ProductDetails = (props: any) => {
 
     }
 
-    useEffect(() => {
-        if (selectProd) {
-            fetchData();
-        }
-        if (adjustableFiltersData.length > 0) {
-            fetchData();
-        }
-    }, [selectProd, adjustableFiltersData])
+    useEffect(()=>{
+        if(measureFilters.length) {
+            fetchData()
+        } 
+    },[measureFilters])
 
 
     const options = {
@@ -312,9 +355,9 @@ const ProductDetails = (props: any) => {
                         </div>
                     }
                 </div>
-                
+
             </div>
-            <RealvsExpected payloadData={payloadData} selectProd={selectProd} adjustableFiltersData={adjustableFiltersData}/>
+            <RealvsExpected activeIndex={activeIndex} filterValues={filterValues} measureFilters={measureFilters} adjustableFiltersData={adjustableFiltersData} />
         </div>
     )
 }

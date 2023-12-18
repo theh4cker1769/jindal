@@ -510,3 +510,7 @@
     padding: 5px 20px;
     margin-right: 20px;
 }
+
+.main-box .client-con-btn:hover {
+    background-color: #3700b391;
+}

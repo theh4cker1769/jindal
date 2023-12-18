@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import Switch from 'react-switch'
 
 const ClientConfigurations = () => {
 
+  // Switch 
   const switchProps = {
     handleDiameter: 21,
     checkedIcon: false,
@@ -91,6 +92,56 @@ const ClientConfigurations = () => {
   const togglePermutation = (checked: any) => {
     setShowPermutation(checked);
   };
+
+
+  // Local Storage Data
+  const [data, setData] = React.useState<any>('');
+
+  const saveToLocalStorage = () => {
+    setData({
+      country: showCountry,
+      geoLevel: showGeoLevel,
+      channel: showChannel,
+      geoLevel2: showGeoLevel2,
+      category: showCategory,
+      segment: showSegment,
+      brand: showBrand,
+      subBrand: showSubBrand,
+      packSize: showPackSize,
+      permutation: showPermutation
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('clientConfiguration', JSON.stringify(data))
+    }
+  }, [data])
+
+
+  // Client Configuration Local Storage
+  const [localDataClientConfiguration, setLocalDataClientConfiguration] = useState<any>()
+  useEffect(() => {
+      const storedValue = localStorage.getItem('clientConfiguration');
+      if (storedValue !== null) {
+          setLocalDataClientConfiguration(JSON.parse(storedValue))
+      }
+  }, [])
+
+  useEffect(() => {
+    if(localDataClientConfiguration) {
+      setShowCountry(localDataClientConfiguration.country)
+      setShowGeoLevel(localDataClientConfiguration.geoLevel)
+      setShowChannel(localDataClientConfiguration.channel)
+      setShowGeoLevel2(localDataClientConfiguration.geoLevel2)
+      setShowCategory(localDataClientConfiguration.category)
+      setShowSegment(localDataClientConfiguration.segment)
+      setShowBrand(localDataClientConfiguration.brand)
+      setShowSubBrand(localDataClientConfiguration.subBrand)
+      setShowPackSize(localDataClientConfiguration.packSize)
+      setShowPermutation(localDataClientConfiguration.permutation)
+    }
+  }, [localDataClientConfiguration])
 
   return (
     <div className='client-configurations'>
@@ -195,7 +246,7 @@ const ClientConfigurations = () => {
           </div>
         }
         <div className="text-right">
-          <button className='client-con-btn'>Save</button>
+          <button className='client-con-btn' onClick={saveToLocalStorage}>Save</button>
         </div>
       </div>
     </div>

@@ -14,8 +14,6 @@ const AdjustableFilters = (props: any) => {
     const [modelPriceElasticity, setModelPriceElasticity] = useState('')
     const [modelGramElasticity, setModelGramElasticity] = useState('')
 
-
-    console.log(modelPriceElasticity)
     useEffect(() => {
         if (props.dataProdDetails.length > 0) {
             setPriceElasticityExpected(props.dataProdDetails[0].priceElasticityExpected.toFixed(2))
