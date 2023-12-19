@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Select from 'react-select'
 import Switch from 'react-switch'
+import Select from 'react-select'
 
 const ClientConfigurations = () => {
 
@@ -122,14 +122,14 @@ const ClientConfigurations = () => {
   // Client Configuration Local Storage
   const [localDataClientConfiguration, setLocalDataClientConfiguration] = useState<any>()
   useEffect(() => {
-      const storedValue = localStorage.getItem('clientConfiguration');
-      if (storedValue !== null) {
-          setLocalDataClientConfiguration(JSON.parse(storedValue))
-      }
+    const storedValue = localStorage.getItem('clientConfiguration');
+    if (storedValue !== null) {
+      setLocalDataClientConfiguration(JSON.parse(storedValue))
+    }
   }, [])
 
   useEffect(() => {
-    if(localDataClientConfiguration) {
+    if (localDataClientConfiguration) {
       setShowCountry(localDataClientConfiguration.country)
       setShowGeoLevel(localDataClientConfiguration.geoLevel)
       setShowChannel(localDataClientConfiguration.channel)
@@ -143,10 +143,19 @@ const ClientConfigurations = () => {
     }
   }, [localDataClientConfiguration])
 
+  const options = [
+    { value: 'Client 3', label: 'Client 3' }
+  ]
+
   return (
     <div className='client-configurations'>
       <h2 className='heading'>Client Configurations</h2>
       <div className="main-box">
+        <Select 
+          options={options} 
+          className='select'
+          placeholder={'Select Client'}
+        />
         <div className="control-switch-sec">
           <div className="switch-box">
             <h6>Geo-Location</h6>

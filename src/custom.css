@@ -456,6 +456,11 @@
     margin-bottom: 100px;
 }
 
+.client-configurations .main-box .select {
+    margin-bottom: 20px;
+    width: 240px;
+}
+
 .client-configurations .main-box .switch-box {
     display: flex;
     width: fit-content;

@@ -48,9 +48,10 @@ const AdjustableFilters = (props: any) => {
     const adjustablefiltersData = {
         priceElasticityExpected: priceElasticityExpected,
         gramsElasticityExpected: gramsElasticityExpected,
-        modelPriceElasticity: modelPriceElasticity,
-        modelGramElasticity: modelGramElasticity
+        modelPriceElasticity: selectedOptionPrice,
+        modelGramElasticity: selectedOptionGram
     }
+    console.log(modelPriceElasticity)
 
     const applyAdjust = () => {
         props.adjustablefiltersData(adjustablefiltersData)
