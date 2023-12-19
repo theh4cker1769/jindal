@@ -17,13 +17,6 @@ const ElasticityPricingTrack = () => {
     const sendProductDataToParent = (dataProd: any) => {
         setDataProdDetails(dataProd)
     }
-
-    const [selectedProdState, setSelectedProdState] = useState();
-
-    const selectedProd = (v: any) => {
-        setSelectedProdState(v)
-    }
-
     
     // Adjustable Filter Data
     const [adjustableFilters, setAdjustableFilters] = useState()
@@ -31,6 +24,7 @@ const ElasticityPricingTrack = () => {
         setAdjustableFilters(adjustablefiltersData)
     }
 
+    //Product Index
     const [activeIndex, setActiveIndex] = useState<any>(0)
     const sendActiveIndex = (i:any) => {
         setActiveIndex(i)
@@ -51,7 +45,7 @@ const ElasticityPricingTrack = () => {
             <Filter sendProductData={sendProductData} />
             <section className="product-details">
                 <Products filterValue={filterValue} sendProductDataToParent={sendProductDataToParent} sendActiveIndex={sendActiveIndex}/>
-                <ProductDetails filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} selectedProdState={selectedProdState} />
+                <ProductDetails filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} />
                 <AdjustableFilters dataProdDetails={dataProdDetails} adjustablefiltersData={adjustablefiltersData}/>
             </section>
         </div>

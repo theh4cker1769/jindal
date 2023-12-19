@@ -45,7 +45,7 @@ const AdjustableFilters = (props: any) => {
         priceElasticityExpected: priceElasticityExpected,
         gramsElasticityExpected: gramsElasticityExpected,
         modelPriceElasticity: modelPriceElasticity,
-        modelGramElasticity: modelGramElasticity,
+        modelGramElasticity: modelGramElasticity
     }
 
     const applyAdjust = () => {

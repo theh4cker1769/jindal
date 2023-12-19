@@ -120,7 +120,7 @@ const Products = (props: any) => {
         }
     }, [filterValues])
 
-    const [activeIndex, setActiveIndex] = useState<any>(1)
+    const [activeIndex, setActiveIndex] = useState<any>()
     const handleItemClick = (i: any) => {
         setActiveIndex(i)
         props.sendActiveIndex(i)
