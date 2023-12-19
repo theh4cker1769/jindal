@@ -9,17 +9,21 @@ const AdjustableFilters = (props: any) => {
         setDropdown(!dropdown)
     }
 
-    const [priceElasticityExpected, setPriceElasticityExpected] = useState('')
-    const [gramsElasticityExpected, setGramsElasticityExpected] = useState('')
-    const [modelPriceElasticity, setModelPriceElasticity] = useState('')
-    const [modelGramElasticity, setModelGramElasticity] = useState('')
+    const [priceElasticityExpected, setPriceElasticityExpected] = useState()
+    const [gramsElasticityExpected, setGramsElasticityExpected] = useState()
+    const [modelPriceElasticity, setModelPriceElasticity] = useState()
+    const [modelGramElasticity, setModelGramElasticity] = useState()
 
     useEffect(() => {
-        if (props.dataProdDetails.length > 0) {
+        if (props.dataProdDetails) {
             setPriceElasticityExpected(props.dataProdDetails[0].priceElasticityExpected.toFixed(2))
             setGramsElasticityExpected(props.dataProdDetails[0].gramsElasticityExpected.toFixed(2))
-            setModelPriceElasticity(props.dataProdDetails[0].modelPriceElasticity)
-            setModelGramElasticity(props.dataProdDetails[0].modelGramsElasticityCurve)
+            if (props.dataProdDetails[0].modelPriceElasticity) {
+                setModelPriceElasticity(props.dataProdDetails[0].modelPriceElasticity)
+            }
+            if (props.dataProdDetails[0].modelGramsElasticityCurve) {
+                setModelGramElasticity(props.dataProdDetails[0].modelGramsElasticityCurve)
+            }
         }
     }, [props.dataProdDetails])
 
@@ -34,13 +38,13 @@ const AdjustableFilters = (props: any) => {
     }
 
     useEffect(() => {
-        if(modelPriceElasticity != null && modelGramElasticity != null){
+        if (modelPriceElasticity != null && modelGramElasticity != null) {
             setSelectedOptionPrice(modelPriceElasticity)
             setSelectedOptionGram(modelGramElasticity)
         }
-    },[modelPriceElasticity, modelGramElasticity])
+    }, [modelPriceElasticity, modelGramElasticity])
 
-    
+
     const adjustablefiltersData = {
         priceElasticityExpected: priceElasticityExpected,
         gramsElasticityExpected: gramsElasticityExpected,
@@ -69,7 +73,7 @@ const AdjustableFilters = (props: any) => {
                     <div className="bodyRightList">
                         <div className="item">
                             <h6>Price elasticity expected</h6>
-                            <input type="text" value={priceElasticityExpected} onChange={(e: any) => setPriceElasticityExpected(e.target.value)}/>
+                            <input type="text" value={priceElasticityExpected} onChange={(e: any) => setPriceElasticityExpected(e.target.value)} />
                         </div>
                         <div className="item">
                             <h6>Gram elasticity expected</h6>
@@ -79,19 +83,19 @@ const AdjustableFilters = (props: any) => {
                             <div className="filter-radio">
                                 <h6>Model price elasticity curve</h6>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio1" name="radiosPrice" value="High" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "High" ? true : false}/>
+                                    <input type="radio" id="radio1" name="radiosPrice" value="High" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "High" ? true : false} />
                                     <label htmlFor="radio1">High</label>
                                 </div>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio2" name="radiosPrice" value="Medium" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "Medium" ? true : false}/>
+                                    <input type="radio" id="radio2" name="radiosPrice" value="Medium" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "Medium" ? true : false} />
                                     <label htmlFor="radio2">Medium</label>
                                 </div>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio3" name="radiosPrice" value="Low" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "Low" ? true : false}/>
+                                    <input type="radio" id="radio3" name="radiosPrice" value="Low" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "Low" ? true : false} />
                                     <label htmlFor="radio3">Low</label>
                                 </div>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio4" name="radiosPrice" value="No Curve" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "No Curve" ? true : false}/>
+                                    <input type="radio" id="radio4" name="radiosPrice" value="No Curve" onChange={handleOptionChangePrice} checked={selectedOptionPrice == "No Curve" ? true : false} />
                                     <label htmlFor="radio4">No Curve</label>
                                 </div>
                             </div>
@@ -100,19 +104,19 @@ const AdjustableFilters = (props: any) => {
                             <div className="filter-radio">
                                 <h6>Model gram elasticity curve</h6>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio5" name="radiosGram" value="High" onChange={handleOptionChangeGram} checked={selectedOptionGram == "High" ? true : false}/>
+                                    <input type="radio" id="radio5" name="radiosGram" value="High" onChange={handleOptionChangeGram} checked={selectedOptionGram == "High" ? true : false} />
                                     <label htmlFor="radio5">High</label>
                                 </div>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio6" name="radiosGram" value="Medium" onChange={handleOptionChangeGram} checked={selectedOptionGram == "Medium" ? true : false}/>
+                                    <input type="radio" id="radio6" name="radiosGram" value="Medium" onChange={handleOptionChangeGram} checked={selectedOptionGram == "Medium" ? true : false} />
                                     <label htmlFor="radio6">Medium</label>
                                 </div>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio7" name="radiosGram" value="Low" onChange={handleOptionChangeGram} checked={selectedOptionGram == "Low" ? true : false}/>
+                                    <input type="radio" id="radio7" name="radiosGram" value="Low" onChange={handleOptionChangeGram} checked={selectedOptionGram == "Low" ? true : false} />
                                     <label htmlFor="radio7">Low</label>
                                 </div>
                                 <div className="custom-radio">
-                                    <input type="radio" id="radio8" name="radiosGram" value="No Curve" onChange={handleOptionChangeGram} checked={selectedOptionGram == "No Curve" ? true : false}/>
+                                    <input type="radio" id="radio8" name="radiosGram" value="No Curve" onChange={handleOptionChangeGram} checked={selectedOptionGram == "No Curve" ? true : false} />
                                     <label htmlFor="radio8">No Curve</label>
                                 </div>
                             </div>

@@ -8,28 +8,28 @@ Chart.register(...registerables);
 const ProductDetails = (props: any) => {
 
     const [measureFilters, setMesurableFilters] = useState<any>({
-        productName: "",
-        productInfo: "",
-        subBrandName: "",
-        packSize: "",
-        displayName: "",
-        pricePerUnitFrom: '',
-        pricePerUnitTo: '',
-        pricePerUnitVar: '',
-        gramPerUnitFrom: '',
-        gramPerUnitTo: '',
-        gramPerUnitVar: '',
-        priceElasticityExpected: '',
-        gramsElasticityExpected: '',
-        modelPriceElasticity: "",
-        modelGramsElasticityCurve: "",
-        date: "",
-        mixSellIn: '',
-        mixSellInBrandLevel: ''
+        // productName: "",
+        // productInfo: "",
+        // subBrandName: "",
+        // packSize: "",
+        // displayName: "",
+        // pricePerUnitFrom: '',
+        // pricePerUnitTo: '',
+        // pricePerUnitVar: '',
+        // gramPerUnitFrom: '',
+        // gramPerUnitTo: '',
+        // gramPerUnitVar: '',
+        // priceElasticityExpected: '',
+        // gramsElasticityExpected: '',
+        // modelPriceElasticity: "",
+        // modelGramsElasticityCurve: "",
+        // date: "",
+        // mixSellIn: '',
+        // mixSellInBrandLevel: ''
     })
 
     useEffect(() => {
-        if (props.dataProdDetails.length > 0) {
+        if (props.dataProdDetails) {
             const objectWithoutArray = props.dataProdDetails[0]
             setMesurableFilters(objectWithoutArray)
         }
@@ -39,6 +39,7 @@ const ProductDetails = (props: any) => {
     useEffect(() => {
         if (props.adjustableFilters) {
             setAdjustableFiltersData(props.adjustableFilters)
+            setLoading(true)
         }
     }, [props.adjustableFilters])
 
@@ -69,12 +70,14 @@ const ProductDetails = (props: any) => {
                 }))
             }
         }
-        setMesurableFilters((item: any) => ({
-            ...item,
-            pricePerUnitFrom: pricePerUnitFrom,
-            pricePerUnitTo: pricePerUnitTo,
-            pricePerUnitVar: pricePerUnitVar
-        }))
+        if (pricePerUnitFrom || pricePerUnitTo || pricePerUnitVar) {
+            setMesurableFilters((item: any) => ({
+                ...item,
+                pricePerUnitFrom: pricePerUnitFrom,
+                pricePerUnitTo: pricePerUnitTo,
+                pricePerUnitVar: pricePerUnitVar
+            }))
+        }
     }, [adjustableFiltersData])
 
 
@@ -82,12 +85,8 @@ const ProductDetails = (props: any) => {
     const [pricePerUnitTo, setPricePerUnitTo] = useState()
     const [pricePerUnitVar, setPricePerUnitVar] = useState()
 
-
-
-
-
     useEffect(() => {
-        if (props.dataProdDetails.length > 0) {
+        if (props.dataProdDetails) {
             setPricePerUnitFrom(props.dataProdDetails[0].pricePerUnitFrom.toFixed(2))
             setPricePerUnitTo(props.dataProdDetails[0].pricePerUnitTo.toFixed(2))
             setPricePerUnitVar(props.dataProdDetails[0].pricePerUnitVar.toFixed(2))
@@ -95,9 +94,7 @@ const ProductDetails = (props: any) => {
     }, [props.dataProdDetails])
 
 
-
     const [dataProd, setDataProd] = useState<any>()
-    const [chartGraphDataState, setChartGraphDataState] = useState<any>()
 
 
     // Filter Values
@@ -210,16 +207,17 @@ const ProductDetails = (props: any) => {
         }
     }, [filterValues])
 
-    const [activeIndex, setActiveIndex] = useState<any>(1)
+    const [activeIndex, setActiveIndex] = useState<any>()
     useEffect(() => {
         if (props.activeIndex) {
             setActiveIndex(props.activeIndex)
+            setLoading(true)
         }
     }, [props.activeIndex])
 
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyODc1NDc0LCJleHAiOjE3MDI5NjE4NzQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjg3NTQ3NH0.sQtqy2t7JDye91r9vYi8LcLPce87RHQ_q0mhNt_V3as';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyOTY1ODE1LCJleHAiOjE3MDMwNTIyMTUsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjk2NTgxNX0.3mrqkI_HcPJsZK1eH-CldfD8_7ida7_DQr2bndW96tA';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/unitvariationsexpected';
         const payload = {
             "country": payloadValue.country,
@@ -265,22 +263,22 @@ const ProductDetails = (props: any) => {
     const [render, setRender] = useState(false)
     useEffect(() => {
         if (render) {
-            fetchData()
+            if (measureFilters) {
+                fetchData()
+            }
         } else {
             setRender(true);
         }
     }, [measureFilters]);
 
+    const [chartGraphDataState, setChartGraphDataState] = useState<any>()
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (dataProd) {
             const chartGraphData = {
                 labels: dataProd.map((_: any, i: any) => i + 1),
                 datasets: [
-                    {
-                        label: "Gram Effect",
-                        data: dataProd.map((data: any) => data.gramEffect)
-                    },
                     {
                         label: "Price Effect",
                         data: dataProd.map((data: any) => data.priceEffect)
@@ -294,6 +292,12 @@ const ProductDetails = (props: any) => {
             setChartGraphDataState(chartGraphData)
         }
     }, [dataProd])
+
+    useEffect(() => {
+        if (chartGraphDataState) {
+            setLoading(false)
+        }
+    }, [chartGraphDataState])
 
     const options = {
         scales: {
@@ -378,31 +382,41 @@ const ProductDetails = (props: any) => {
                         </div>
                     </div>
                 </div>
-                <div className="card-body">
-                    <div className="graph-cus">
-                        {chartGraphDataState &&
-                            <Line data={chartGraphDataState} options={options} />
-                        }
+                {loading ?
+                    <div className="loader">
+                        <div className="pl4">
+                            <div className="pl4__a"></div>
+                            <div className="pl4__b"></div>
+                            <div className="pl4__c"></div>
+                            <div className="pl4__d"></div>
+                        </div>
                     </div>
-                    {chartGraphDataState &&
-                        <div className="data-column">
-                            <div className="price-effect">
-                                <div className="heading" onClick={priceEffectToggle}>
-                                    <h3>Price effect</h3>
-                                    {!priceEffectToggleState ? <FiPlus /> : <FiMinus />}
-                                </div>
-                                {priceEffectToggleState &&
-                                    <div className="content">
-                                        {dataProd && dataProd.map((v: any, i: any) => (
-                                            <span className="item" key={i}>
-                                                {i + 1} <br />
-                                                <i>{v.priceEffect.toFixed(2)}</i>
-                                            </span>
-                                        ))}
+                    :
+                    <div className="card-body">
+                        <div className="graph-cus">
+                            {chartGraphDataState &&
+                                <Line data={chartGraphDataState} options={options} />
+                            }
+                        </div>
+                        {chartGraphDataState &&
+                            <div className="data-column">
+                                <div className="price-effect">
+                                    <div className="heading" onClick={priceEffectToggle}>
+                                        <h3>Price effect</h3>
+                                        {!priceEffectToggleState ? <FiPlus /> : <FiMinus />}
                                     </div>
-                                }
-                            </div>
-                            <div className="price-effect gram-effect">
+                                    {priceEffectToggleState &&
+                                        <div className="content">
+                                            {dataProd && dataProd.map((v: any, i: any) => (
+                                                <span className="item" key={i}>
+                                                    {i + 1} <br />
+                                                    <i>{v.priceEffect.toFixed(2)}</i>
+                                                </span>
+                                            ))}
+                                        </div>
+                                    }
+                                </div>
+                                {/* <div className="price-effect gram-effect">
                                 <div className="heading" onClick={gramEffectToggle}>
                                     <h3>Gram effect</h3>
                                     {!gramEffectToggleState ? <FiPlus /> : <FiMinus />}
@@ -417,27 +431,27 @@ const ProductDetails = (props: any) => {
                                         ))}
                                     </div>
                                 }
-                            </div>
-                            <div className="price-effect total-effect">
-                                <div className="heading" onClick={totalEffectToggle}>
-                                    <h3>Total effect</h3>
-                                    {!totalEffectToggleState ? <FiPlus /> : <FiMinus />}
-                                </div>
-                                {totalEffectToggleState &&
-                                    <div className="content">
-                                        {dataProd && dataProd.map((v: any, i: any) => (
-                                            <span className="item" key={i}>
-                                                {i + 1} <br />
-                                                <i>{v.totalEffect.toFixed(2)}</i>
-                                            </span>
-                                        ))}
+                            </div> */}
+                                <div className="price-effect total-effect">
+                                    <div className="heading" onClick={totalEffectToggle}>
+                                        <h3>Total effect</h3>
+                                        {!totalEffectToggleState ? <FiPlus /> : <FiMinus />}
                                     </div>
-                                }
+                                    {totalEffectToggleState &&
+                                        <div className="content">
+                                            {dataProd && dataProd.map((v: any, i: any) => (
+                                                <span className="item" key={i}>
+                                                    {i + 1} <br />
+                                                    <i>{v.totalEffect.toFixed(2)}</i>
+                                                </span>
+                                            ))}
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    }
-                </div>
-
+                        }
+                    </div>
+                }
             </div>
             <RealvsExpected payloadValue={payloadValue} activeIndex={activeIndex} filterValues={filterValues} measureFilters={measureFilters} adjustableFiltersData={adjustableFiltersData} />
         </div>

@@ -14,7 +14,7 @@ const Filter = (props: any) => {
     };
 
     // Date Picker
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(null);
 
     const mainOptions = [
         { value: 'Geo-Filters', label: 'Geo-Filters' },
@@ -31,7 +31,7 @@ const Filter = (props: any) => {
     const [resultData, setResultData] = useState<any>()
 
     const fetchData = async (type: string) => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyOTA3OTAxLCJleHAiOjE3MDI5MTUxMDEsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjkwNzkwMX0.hhGObyF-JLiJcQ05F9RvX1Ss9sbbpEamY8t2mPNwkUQ';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyOTc0NDE2LCJleHAiOjE3MDI5ODE2MTYsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjk3NDQxNn0.VtL0ZDl2vb0fdz389ewYkT911R0Sm5OdfyoJY4rND0M';
         const url = `http://localhost:81/api/configuration/GetDropDownItems/${parentKey}/${multipleChildItems}`
 
         try {
@@ -161,7 +161,7 @@ const Filter = (props: any) => {
     const [resultDataProduct, setResultDataProduct] = useState<any>()
 
     const fetchDataProduct = async (type: string) => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyOTA3OTAxLCJleHAiOjE3MDI5MTUxMDEsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjkwNzkwMX0.hhGObyF-JLiJcQ05F9RvX1Ss9sbbpEamY8t2mPNwkUQ';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyOTc0NDE2LCJleHAiOjE3MDI5ODE2MTYsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDQ0Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjk3NDQxNn0.VtL0ZDl2vb0fdz389ewYkT911R0Sm5OdfyoJY4rND0M';
         const url = `http://localhost:81/api/configuration/GetDropDownItems/${parentKeyProduct}/${multipleChildItemsProduct}`
 
         try {
@@ -619,10 +619,10 @@ const Filter = (props: any) => {
                 }
             </ul>
             <div className="filter-datepicker">
-                <DatePicker selected={startDate} onChange={(date: any) => setStartDate(date)} dateFormat="dd-MM-yyyy" />
+                <DatePicker selected={startDate} placeholderText={'Pricing Date'}  onChange={(date: any) => setStartDate(date)} dateFormat="dd-MM-yyyy" />
                 <LuCalendarCheck2 />
             </div>
-            <button className={`filterBtn ${productPermutationDataVal ? '' : 'disabled'}`} type="button" onClick={applyFilter} disabled={productPermutationDataVal ? false : true}>Apply</button>
+            <button className={`filterBtn ${startDate ? '' : 'disabled'}`} type="button" onClick={applyFilter} disabled={startDate ? false : true}>Apply</button>
         </section>
 
     )

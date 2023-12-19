@@ -6,13 +6,14 @@ Chart.register(...registerables);
 const RealvsExpected = (props: any) => {
 
     const [dataProd, setDataProd] = useState<any>()
-    const [chartGraphDataState, setChartGraphDataState] = useState<any>()
+
 
     //Measurable Fiters
     const [measureFilters, setMesurableFilters] = useState<any>()
     useEffect(() => {
         if (props.measureFilters) {
             setMesurableFilters(props.measureFilters)
+            setLoading(false)
         }
     }, [props.measureFilters])
 
@@ -37,15 +38,16 @@ const RealvsExpected = (props: any) => {
         }
     }, [props.payloadValue])
 
-    const [activeIndex, setActiveIndex] = useState<any>(1)
+    const [activeIndex, setActiveIndex] = useState<any>()
     useEffect(() => {
         if (props.activeIndex) {
             setActiveIndex(props.activeIndex)
+            setLoading(true)
         }
     }, [props.activeIndex])
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyODc1NDc0LCJleHAiOjE3MDI5NjE4NzQsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjg3NTQ3NH0.sQtqy2t7JDye91r9vYi8LcLPce87RHQ_q0mhNt_V3as';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyOTY1ODE1LCJleHAiOjE3MDMwNTIyMTUsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjk2NTgxNX0.3mrqkI_HcPJsZK1eH-CldfD8_7ida7_DQr2bndW96tA';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/realvsexpected';
         const payload = {
             "country": payloadValue.country,
@@ -68,8 +70,6 @@ const RealvsExpected = (props: any) => {
             "dataSource": "sellOut",
         }
 
-        // const payload = props.payloadData
-
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -82,7 +82,7 @@ const RealvsExpected = (props: any) => {
             if (response.ok) {
                 const result = await response.json()
                 setDataProd(result.brands[0].child[0].weekData1)
-                
+
             } else {
                 console.error('Failed to fetch data');
             }
@@ -96,8 +96,11 @@ const RealvsExpected = (props: any) => {
         if (measureFilters) {
             fetchData()
         }
-
     }, [measureFilters])
+
+
+    const [chartGraphDataState, setChartGraphDataState] = useState<any>()
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (dataProd) {
@@ -118,14 +121,33 @@ const RealvsExpected = (props: any) => {
         }
     }, [dataProd])
 
+    useEffect(() => {
+        if (chartGraphDataState) {
+            setLoading(false)
+        }
+    }, [chartGraphDataState])
+
     return (
         <div className='realvsexpected card'>
             <div className="card-header">
                 <h3>Price Elasticity Real Vs Expected</h3>
             </div>
             <div className="card-body">
-                {chartGraphDataState &&
-                    <Bar data={chartGraphDataState} />
+                {loading ?
+                    <div className="loader">
+                        <div className="pl4">
+                            <div className="pl4__a"></div>
+                            <div className="pl4__b"></div>
+                            <div className="pl4__c"></div>
+                            <div className="pl4__d"></div>
+                        </div>
+                    </div>
+                    :
+                    <>
+                        {chartGraphDataState &&
+                            <Bar data={chartGraphDataState} />
+                        }
+                    </>
                 }
             </div>
         </div>

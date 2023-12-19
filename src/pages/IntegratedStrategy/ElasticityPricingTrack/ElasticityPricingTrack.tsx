@@ -13,11 +13,11 @@ const ElasticityPricingTrack = () => {
     }
 
     // Inner Product Data
-    const [dataProdDetails, setDataProdDetails] = useState([]);
+    const [dataProdDetails, setDataProdDetails] = useState();
     const sendProductDataToParent = (dataProd: any) => {
         setDataProdDetails(dataProd)
     }
-    
+
     // Adjustable Filter Data
     const [adjustableFilters, setAdjustableFilters] = useState()
     const adjustablefiltersData = (adjustablefiltersData: any) => {
@@ -25,8 +25,8 @@ const ElasticityPricingTrack = () => {
     }
 
     //Product Index
-    const [activeIndex, setActiveIndex] = useState<any>(0)
-    const sendActiveIndex = (i:any) => {
+    const [activeIndex, setActiveIndex] = useState<any>()
+    const sendActiveIndex = (i: any) => {
         setActiveIndex(i)
     }
 
@@ -43,11 +43,13 @@ const ElasticityPricingTrack = () => {
                 </div>
             </div>
             <Filter sendProductData={sendProductData} />
-            <section className="product-details">
-                <Products filterValue={filterValue} sendProductDataToParent={sendProductDataToParent} sendActiveIndex={sendActiveIndex}/>
-                <ProductDetails filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} />
-                <AdjustableFilters dataProdDetails={dataProdDetails} adjustablefiltersData={adjustablefiltersData}/>
-            </section>
+            {filterValue &&
+                <section className="product-details">
+                    <Products filterValue={filterValue} sendProductDataToParent={sendProductDataToParent} sendActiveIndex={sendActiveIndex} />
+                    <ProductDetails filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} />
+                    <AdjustableFilters dataProdDetails={dataProdDetails} adjustablefiltersData={adjustablefiltersData} />
+                </section>
+            }
         </div>
     )
 }
