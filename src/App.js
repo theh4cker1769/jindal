@@ -13,7 +13,6 @@ import { useState } from 'react';
 function App() {
 
   const [sidebarActive, setSidebarActive] = useState(false);
-
   const toggleSidebarProp = () => {
     setSidebarActive(!sidebarActive)
   }

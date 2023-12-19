@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Switch from 'react-switch'
 import Select from 'react-select'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ClientConfigurations = () => {
 
@@ -97,7 +99,7 @@ const ClientConfigurations = () => {
   // Local Storage Data
   const [data, setData] = React.useState<any>('');
 
-  const saveToLocalStorage = () => {
+  const saveOptions = () => {
     setData({
       country: showCountry,
       geoLevel: showGeoLevel,
@@ -109,6 +111,17 @@ const ClientConfigurations = () => {
       subBrand: showSubBrand,
       packSize: showPackSize,
       permutation: showPermutation
+    });
+    toast.success('Saved', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      style: { width: '200px' }
     });
   };
 
@@ -151,8 +164,8 @@ const ClientConfigurations = () => {
     <div className='client-configurations'>
       <h2 className='heading'>Client Configurations</h2>
       <div className="main-box">
-        <Select 
-          options={options} 
+        <Select
+          options={options}
           className='select'
           placeholder={'Select Client'}
         />
@@ -255,7 +268,8 @@ const ClientConfigurations = () => {
           </div>
         }
         <div className="text-right">
-          <button className='client-con-btn' onClick={saveToLocalStorage}>Save</button>
+          <button className='client-con-btn' onClick={saveOptions}>Save</button>
+          <ToastContainer />
         </div>
       </div>
     </div>
