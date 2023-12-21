@@ -3,6 +3,7 @@ import Filter from "./ElasticPricingTrackComponents/Filter"
 import Products from "./ElasticPricingTrackComponents/Products"
 import ProductDetails from "./ElasticPricingTrackComponents/ProductDetails"
 import AdjustableFilters from "./ElasticPricingTrackComponents/AdjustableFilters"
+import MultipleProductDetails from "./ElasticPricingTrackComponents/MultipleProductDetails"
 
 const ElasticityPricingTrack = () => {
 
@@ -30,6 +31,17 @@ const ElasticityPricingTrack = () => {
         setActiveIndex(i)
     }
 
+    // Add Product 
+    const [addProdPlusState, setAddProdPlusState] = useState<any>([])
+    const addProdPlus = (item: any) => {
+        setAddProdPlusState(item)
+    }
+
+    // Remove Product
+    const [removeProductState, setRemoveProductState] = useState()
+    const removeProduct = (v:any) => {
+        setRemoveProductState(v)
+    }
     return (
         <div id="content" className="p-4 p-md-4">
             <div className="row">
@@ -45,9 +57,15 @@ const ElasticityPricingTrack = () => {
             <Filter sendProductData={sendProductData} />
             {filterValue &&
                 <section className="product-details">
-                    <Products filterValue={filterValue} sendProductDataToParent={sendProductDataToParent} sendActiveIndex={sendActiveIndex} />
-                    <ProductDetails filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} />
-                    <AdjustableFilters dataProdDetails={dataProdDetails} adjustablefiltersData={adjustablefiltersData} />
+                    <Products removeProduct={removeProduct} addProdPlus={addProdPlus} filterValue={filterValue} sendProductDataToParent={sendProductDataToParent} sendActiveIndex={sendActiveIndex} />
+                    {addProdPlusState.length
+                        ? <MultipleProductDetails removeProductState={removeProductState} addProdPlusState={addProdPlusState} filterValue={filterValue} activeIndex={activeIndex} dataProdDetails={dataProdDetails}/>
+                        :
+                        <>
+                            <ProductDetails addProdPlusState={addProdPlusState} filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} />
+                            <AdjustableFilters dataProdDetails={dataProdDetails} adjustablefiltersData={adjustablefiltersData} />
+                        </>
+                    }
                 </section>
             }
         </div>

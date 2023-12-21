@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { FiMinus, FiPlus } from 'react-icons/fi';
 import { TbTriangleFilled } from "react-icons/tb";
 
 const Products = (props: any) => {
@@ -127,7 +128,7 @@ const Products = (props: any) => {
     }
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAyOTY1ODE1LCJleHAiOjE3MDMwNTIyMTUsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMjk2NTgxNX0.3mrqkI_HcPJsZK1eH-CldfD8_7ida7_DQr2bndW96tA';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAzMTM4Mzk4LCJleHAiOjE3MDMyMjQ3OTgsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMzEzODM5OH0._Hn0MrKRTnFr9VmMQoLTspIacPQPbIfa82Os0CMeeFc';
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/adjustablefilters';
         const payload = {
             "country": payloadValue.country,
@@ -169,13 +170,6 @@ const Products = (props: any) => {
     };
 
     const [render, setRender] = useState(false)
-    // useEffect(() => {
-    //     if (render) {
-    //         fetchData()
-    //     } else {
-    //         setRender(true);
-    //     }
-    // }, [payloadValue]);
 
     useEffect(() => {
         if (render) {
@@ -194,6 +188,31 @@ const Products = (props: any) => {
         }
     }, [dataProd])
 
+
+    // Multile Products Select
+
+    const [selectedProd, setSelectedProd] = useState<any>([]);
+    const handlePlus = (v:any, i: any) => {
+        const isSelected = selectedProd.includes(v)
+        if (isSelected) {
+            setSelectedProd(selectedProd.filter((key:any) => key !== v));
+        } else if (selectedProd.length < 3) {
+            setSelectedProd([...selectedProd, v]);
+        }
+    }
+
+    useEffect(()=> {
+        props.addProdPlus(selectedProd)
+    }, [selectedProd])
+
+    const removeProduct = (v:any) => {
+        props.removeProduct(v)
+        const isSelected = selectedProd.includes(v)
+        if (isSelected) {
+            setSelectedProd(selectedProd.filter((key:any) => key !== v));
+        }
+    }
+
     return (
         <div className="products-main">
             <div className={`product-dropdown ${!dropdown ? 'show' : ''}`} onClick={toggleDropdown}>
@@ -206,7 +225,9 @@ const Products = (props: any) => {
                         {payloadValue.permutation && payloadValue.permutation.length > 0 ?
                             <>
                                 {payloadValue.permutation.map((v: any, i: any) => (
-                                    <li key={i + 1} onClick={() => handleItemClick(i + 1)} className={activeIndex === i + 1 ? 'active' : ''}>{v}</li>
+                                    <li key={i + 1} onClick={() => handleItemClick(i + 1)} className={activeIndex === i + 1 && !selectedProd.length ? 'active' : `${selectedProd.includes(v) ? 'multiProd' : ''}`}>
+                                        {v} <i className='icon' onClick={(e:any) => {handlePlus(v, i + 1)}}> {selectedProd.includes(v) ?<FiMinus onClick={(e:any) => (removeProduct(v), e.stopPropagation())}/>  : <> {selectedProd.length !== 3  &&  <FiPlus />} </>}</i>
+                                    </li>
                                 ))}
                             </>
                             :

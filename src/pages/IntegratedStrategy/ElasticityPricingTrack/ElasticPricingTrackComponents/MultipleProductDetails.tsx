@@ -1,100 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import RealvsExpected from './RealvsExpected'
-import { Line } from 'react-chartjs-2'
-import { Chart, registerables } from 'chart.js';
-import { FiPlus, FiMinus } from "react-icons/fi";
-Chart.register(...registerables);
+import { Line } from 'react-chartjs-2';
 
-const ProductDetails = (props: any) => {
+const MultipleProductDetails = (props: any) => {
 
-    const [measureFilters, setMesurableFilters] = useState<any>({
-        // productName: "",
-        // productInfo: "",
-        // subBrandName: "",
-        // packSize: "",
-        // displayName: "",
-        // pricePerUnitFrom: '',
-        // pricePerUnitTo: '',
-        // pricePerUnitVar: '',
-        // gramPerUnitFrom: '',
-        // gramPerUnitTo: '',
-        // gramPerUnitVar: '',
-        // priceElasticityExpected: '',
-        // gramsElasticityExpected: '',
-        // modelPriceElasticity: "",
-        // modelGramsElasticityCurve: "",
-        // date: "",
-        // mixSellIn: '',
-        // mixSellInBrandLevel: ''
-    })
-
+    // Measureable Filterrs
+    const [measureFilters, setMesurableFilters] = useState<any>()
     useEffect(() => {
         if (props.dataProdDetails) {
             const objectWithoutArray = props.dataProdDetails[0]
             setMesurableFilters(objectWithoutArray)
         }
     }, props.dataProdDetails)
-
-    const [adjustableFiltersData, setAdjustableFiltersData] = useState<any>({})
-    useEffect(() => {
-        if (props.adjustableFilters) {
-            setAdjustableFiltersData(props.adjustableFilters)
-            setLoading(true)
-        }
-    }, [props.adjustableFilters])
-
-    useEffect(() => {
-        if (adjustableFiltersData) {
-            if (adjustableFiltersData.priceElasticityExpected) {
-                setMesurableFilters((item: any) => ({
-                    ...item,
-                    priceElasticityExpected: adjustableFiltersData.priceElasticityExpected
-                }))
-            }
-            if (adjustableFiltersData.gramsElasticityExpected) {
-                setMesurableFilters((item: any) => ({
-                    ...item,
-                    gramsElasticityExpected: adjustableFiltersData.gramsElasticityExpected
-                }))
-            }
-            if (adjustableFiltersData.modelGramElasticity) {
-                setMesurableFilters((item: any) => ({
-                    ...item,
-                    modelGramElasticity: adjustableFiltersData.modelGramElasticity
-                }))
-            }
-            if (adjustableFiltersData.modelPriceElasticity) {
-                setMesurableFilters((item: any) => ({
-                    ...item,
-                    modelPriceElasticity: adjustableFiltersData.modelPriceElasticity
-                }))
-            }
-        }
-        if (pricePerUnitFrom || pricePerUnitTo || pricePerUnitVar) {
-            setMesurableFilters((item: any) => ({
-                ...item,
-                pricePerUnitFrom: pricePerUnitFrom,
-                pricePerUnitTo: pricePerUnitTo,
-                pricePerUnitVar: pricePerUnitVar
-            }))
-        }
-    }, [adjustableFiltersData])
-
-
-    const [pricePerUnitFrom, setPricePerUnitFrom] = useState()
-    const [pricePerUnitTo, setPricePerUnitTo] = useState()
-    const [pricePerUnitVar, setPricePerUnitVar] = useState()
-
-    useEffect(() => {
-        if (props.dataProdDetails) {
-            setPricePerUnitFrom(props.dataProdDetails[0].pricePerUnitFrom.toFixed(2))
-            setPricePerUnitTo(props.dataProdDetails[0].pricePerUnitTo.toFixed(2))
-            setPricePerUnitVar(props.dataProdDetails[0].pricePerUnitVar.toFixed(2))
-        }
-    }, [props.dataProdDetails])
-
-
-    
 
 
     // Filter Values
@@ -217,9 +133,7 @@ const ProductDetails = (props: any) => {
         }
     }, [props.activeIndex])
 
-
-
-    // Fetch Data
+    // Fetch Multiproduct Data
     const [dataProd, setDataProd] = useState<any>()
     const fetchData = async () => {
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAzMTM4Mzk4LCJleHAiOjE3MDMyMjQ3OTgsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMzEzODM5OH0._Hn0MrKRTnFr9VmMQoLTspIacPQPbIfa82Os0CMeeFc';
@@ -254,7 +168,7 @@ const ProductDetails = (props: any) => {
             });
             if (response.ok) {
                 const result = await response.json()
-                setDataProd(result.brands[0].child[0].week)
+                setDataProd(result.brands[0].child[0])
 
             } else {
                 console.error('Failed to fetch data');
@@ -262,7 +176,6 @@ const ProductDetails = (props: any) => {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-
     }
 
     const [render, setRender] = useState(false)
@@ -276,59 +189,58 @@ const ProductDetails = (props: any) => {
         }
     }, [measureFilters]);
 
-    const [chartGraphDataState, setChartGraphDataState] = useState<any>()
-    const [loading, setLoading] = useState<any>();
+    // const [addProdPlusState, setAddProdPlusState] = useState<any>([])
+    // useEffect(() => {
+    //     if (props.addProdPlusState) {
+    //         setAddProdPlusState(props.addProdPlusState)
+    //     }
+    // }, [props.addProdPlusState])
 
+
+    const [selectedProdMes, setSelectedProdMes] = useState<any>([]);
     useEffect(() => {
         if (dataProd) {
-            const chartGraphData = {
-                labels: dataProd.map((_: any, i: any) => i + 1),
-                datasets: [
-                    {
-                        label: "Price Effect",
-                        data: dataProd.map((data: any) => data.priceEffect),
-                        lineTension: 0.5
-                    }
-                ]
+            if (selectedProdMes.length < 3) {
+                setSelectedProdMes([...selectedProdMes, dataProd]);
             }
-            setChartGraphDataState(chartGraphData)
         }
     }, [dataProd])
 
+    
+
     useEffect(() => {
-        if (chartGraphDataState) {
+        if (props.removeProductState) {
+            setSelectedProdMes(selectedProdMes.filter((v: any) => !props.removeProductState.includes(v.name)))
+        }
+    }, [props.removeProductState])
+
+    const [loading, setLoading] = useState<any>();
+    const [chartGraphDataState, setChartGraphDataState] = useState<any>()
+    useEffect(() => {
+        if (selectedProdMes.length) {
+            const chartGraphData = {
+                labels: selectedProdMes[0].week.map((_: any, i: any) => i + 1),
+                datasets: selectedProdMes.map((item: any) => ({
+                    label: item.displayName,
+                    data: item.week.map((weekData: any) => weekData.priceEffect),
+                    fill: false,
+                    borderColor: `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`,
+                    tension: 0.5
+                }))
+            }
+            setChartGraphDataState(chartGraphData)
+        }
+    }, [selectedProdMes])
+
+    useEffect(()=>{
+        if(selectedProdMes) {
             setLoading(false)
         }
     }, [chartGraphDataState])
 
-    const options = {
-        scales: {
-            x: {
-                ticks: {
-                    autoSkip: false
-                }
-            }
-        }
-    };
-
-
-    const [priceEffectToggleState, setPriceEffectToggleState] = useState(true)
-    const priceEffectToggle = () => {
-        setPriceEffectToggleState(!priceEffectToggleState)
-    }
-
-    const [gramEffectToggleState, setGramEffectToggleState] = useState(false)
-    const gramEffectToggle = () => {
-        setGramEffectToggleState(!gramEffectToggleState)
-    }
-
-    const [totalEffectToggleState, setTotalEffectToggleState] = useState(false)
-    const totalEffectToggle = () => {
-        setTotalEffectToggleState(!totalEffectToggleState)
-    }
-
+    
     return (
-        <div className="product-details-main-graph">
+        <div className="product-details-main-graph multiple-products">
             <h3 className="text-center p-2" id="sectionHead">
                 Units Variation Expected
             </h3>
@@ -338,10 +250,6 @@ const ProductDetails = (props: any) => {
                     <div className="row align-items-start">
                         <div className="col-md-12">
                             <div className="listGroup w-100 table-responsive">
-                                {/* <ul className="legendList p-0">
-                                    <li><span></span> Price effect</li>
-                                    <li><span></span> Total effect</li>
-                                </ul> */}
 
                                 <ul className="zoom p-0">
                                     <li>
@@ -356,23 +264,6 @@ const ProductDetails = (props: any) => {
                                 </ul>
 
                                 <ul className="PriceList p-0">
-                                    <li>
-                                        <label htmlFor="">
-                                            Price Per <br />
-                                            Pack From
-                                        </label>
-                                        <input type="text" value={pricePerUnitFrom} onChange={(e: any) => setPricePerUnitFrom(e.target.value)} />
-                                    </li>
-                                    <li>
-                                        <label htmlFor="">
-                                            Price Per <br />
-                                            Pack To
-                                        </label>
-                                        <input type="text" value={pricePerUnitTo} onChange={(e: any) => setPricePerUnitTo(e.target.value)} />
-                                    </li>
-                                    <li>
-                                        Var : <span className="highlight"> {pricePerUnitVar}</span>
-                                    </li>
 
                                     <li>
                                         <img src="/images/plus.svg" alt="" />
@@ -397,67 +288,40 @@ const ProductDetails = (props: any) => {
                     <div className="card-body">
                         <div className="graph-cus">
                             {chartGraphDataState &&
-                                <Line data={chartGraphDataState} options={options} />
+                                <Line
+                                    data={chartGraphDataState}
+                                    options={{
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }}
+                                />
                             }
                         </div>
-                        {chartGraphDataState &&
-                            <div className="data-column">
-                                <div className="price-effect">
-                                    <div className="heading" onClick={priceEffectToggle}>
-                                        <h3>Price effect</h3>
-                                        {!priceEffectToggleState ? <FiPlus /> : <FiMinus />}
+                        <div className="data-column">
+                            {selectedProdMes.map((v: any, i: any) => (
+                                <div className="price-effect" key={i}>
+                                    <div className="heading">
+                                        <h3>{v.displayName}</h3>
                                     </div>
-                                    {priceEffectToggleState &&
-                                        <div className="content">
-                                            {dataProd && dataProd.map((v: any, i: any) => (
-                                                <span className="item" key={i}>
-                                                    {i + 1} <br />
-                                                    <i>{v.priceEffect.toFixed(2)}</i>
-                                                </span>
-                                            ))}
-                                        </div>
-                                    }
-                                </div>
-                                {/* <div className="price-effect gram-effect">
-                                <div className="heading" onClick={gramEffectToggle}>
-                                    <h3>Gram effect</h3>
-                                    {!gramEffectToggleState ? <FiPlus /> : <FiMinus />}
-                                </div>
-                                {gramEffectToggleState &&
                                     <div className="content">
-                                        {dataProd && dataProd.map((v: any, i: any) => (
+                                        {v.week.map((v: any, i: any) => (
                                             <span className="item" key={i}>
-                                                {i + 1} <br />
-                                                <i>{v.gramEffect.toFixed(2)}</i>
+                                                {v.priceEffect.toFixed(2)}
                                             </span>
                                         ))}
                                     </div>
-                                }
-                            </div> */}
-                                <div className="price-effect total-effect">
-                                    <div className="heading" onClick={totalEffectToggle}>
-                                        <h3>Total effect</h3>
-                                        {!totalEffectToggleState ? <FiPlus /> : <FiMinus />}
-                                    </div>
-                                    {totalEffectToggleState &&
-                                        <div className="content">
-                                            {dataProd && dataProd.map((v: any, i: any) => (
-                                                <span className="item" key={i}>
-                                                    {i + 1} <br />
-                                                    <i>{v.totalEffect.toFixed(2)}</i>
-                                                </span>
-                                            ))}
-                                        </div>
-                                    }
                                 </div>
-                            </div>
-                        }
+                            ))}
+                        </div>
                     </div>
                 }
             </div>
-            <RealvsExpected payloadValue={payloadValue} activeIndex={activeIndex} filterValues={filterValues} measureFilters={measureFilters} adjustableFiltersData={adjustableFiltersData} />
         </div>
     )
 }
 
-export default ProductDetails
+export default MultipleProductDetails

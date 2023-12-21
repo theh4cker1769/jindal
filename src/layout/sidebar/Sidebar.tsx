@@ -38,10 +38,14 @@ const Sidebar = (props: { sidebarActive: any }) => {
           </div>
           {dropdownInteStatState &&
             <div className="dropdow-content">
-              <span><NavLink to={'/test2'}>Price Setting Tool</NavLink></span>
+              <span>
+                <NavLink to={'/client-configurations'} className={({ isActive }) => isActive ? "active" : ""}>
+                  Client Configurations
+                </NavLink>
+              </span>
               <span>
                 <NavLink to={'elasticity-pricing-track'} className={({ isActive }) => isActive ? "active" : ""}>
-                   Elasticity Pricing Track 
+                  Elasticity Pricing Track
                 </NavLink>
               </span>
               <span><NavLink to={'/test2'}>Elasticity Pricing Track <br /> Model Details</NavLink></span>

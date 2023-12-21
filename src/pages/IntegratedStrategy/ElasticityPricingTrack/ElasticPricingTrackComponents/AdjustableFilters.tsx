@@ -51,7 +51,6 @@ const AdjustableFilters = (props: any) => {
         modelPriceElasticity: selectedOptionPrice,
         modelGramElasticity: selectedOptionGram
     }
-    console.log(modelPriceElasticity)
 
     const applyAdjust = () => {
         props.adjustablefiltersData(adjustablefiltersData)
