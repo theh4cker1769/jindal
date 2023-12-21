@@ -611,7 +611,6 @@
 }
 
 .client-configurations .Toastify .Toastify__toast-container {
-    right: -6em;
     text-align: left;
     top: 5em;
 }

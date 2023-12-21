@@ -310,7 +310,9 @@ const MultipleProductDetails = (props: any) => {
                                     <div className="content">
                                         {v.week.map((v: any, i: any) => (
                                             <span className="item" key={i}>
-                                                {v.priceEffect.toFixed(2)}
+                                                {i+1}
+                                                <br />
+                                                <i>{v.priceEffect.toFixed(2)}</i>
                                             </span>
                                         ))}
                                     </div>

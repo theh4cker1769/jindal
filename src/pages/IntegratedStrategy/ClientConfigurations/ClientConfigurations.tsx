@@ -112,7 +112,7 @@ const ClientConfigurations = () => {
       packSize: showPackSize,
       permutation: showPermutation
     });
-    toast.success('Saved', {
+    toast.success('Client Configuration Saved', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -120,8 +120,7 @@ const ClientConfigurations = () => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
-      style: { width: '200px' }
+      theme: "dark"
     });
   };
 

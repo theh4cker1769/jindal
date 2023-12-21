@@ -14,18 +14,25 @@ const AdjustableFilters = (props: any) => {
     const [modelPriceElasticity, setModelPriceElasticity] = useState()
     const [modelGramElasticity, setModelGramElasticity] = useState()
 
+    const [dataProdDetails, setDataProdDetails] = useState<any>()
     useEffect(() => {
         if (props.dataProdDetails) {
-            setPriceElasticityExpected(props.dataProdDetails[0].priceElasticityExpected.toFixed(2))
-            setGramsElasticityExpected(props.dataProdDetails[0].gramsElasticityExpected.toFixed(2))
-            if (props.dataProdDetails[0].modelPriceElasticity) {
-                setModelPriceElasticity(props.dataProdDetails[0].modelPriceElasticity)
-            }
-            if (props.dataProdDetails[0].modelGramsElasticityCurve) {
-                setModelGramElasticity(props.dataProdDetails[0].modelGramsElasticityCurve)
-            }
+            setDataProdDetails(props.dataProdDetails[0])
         }
     }, [props.dataProdDetails])
+
+    useEffect(() => {
+        if (dataProdDetails) {
+            setPriceElasticityExpected(dataProdDetails.priceElasticityExpected.toFixed(2))
+            setGramsElasticityExpected(dataProdDetails.gramsElasticityExpected.toFixed(2))
+            if (dataProdDetails.modelPriceElasticity) {
+                setModelPriceElasticity(dataProdDetails.modelPriceElasticity)
+            }
+            if (dataProdDetails.modelGramsElasticityCurve) {
+                setModelGramElasticity(dataProdDetails.modelGramsElasticityCurve)
+            }
+        }
+    }, [dataProdDetails])
 
     const [selectedOptionPrice, setSelectedOptionPrice] = useState<any>();
     const handleOptionChangePrice = (event: any) => {

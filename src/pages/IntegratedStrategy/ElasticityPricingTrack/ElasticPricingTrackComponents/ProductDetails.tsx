@@ -35,7 +35,7 @@ const ProductDetails = (props: any) => {
         }
     }, props.dataProdDetails)
 
-    const [adjustableFiltersData, setAdjustableFiltersData] = useState<any>({})
+    const [adjustableFiltersData, setAdjustableFiltersData] = useState<any>()
     useEffect(() => {
         if (props.adjustableFilters) {
             setAdjustableFiltersData(props.adjustableFilters)
@@ -85,17 +85,21 @@ const ProductDetails = (props: any) => {
     const [pricePerUnitTo, setPricePerUnitTo] = useState()
     const [pricePerUnitVar, setPricePerUnitVar] = useState()
 
+
+    const [dataProdDetails, setDataProdDetails] = useState<any>()
     useEffect(() => {
         if (props.dataProdDetails) {
-            setPricePerUnitFrom(props.dataProdDetails[0].pricePerUnitFrom.toFixed(2))
-            setPricePerUnitTo(props.dataProdDetails[0].pricePerUnitTo.toFixed(2))
-            setPricePerUnitVar(props.dataProdDetails[0].pricePerUnitVar.toFixed(2))
+            setDataProdDetails(props.dataProdDetails[0])
         }
     }, [props.dataProdDetails])
 
-
-    
-
+    useEffect(() => {
+        if (dataProdDetails) {
+            setPricePerUnitFrom(dataProdDetails.pricePerUnitFrom.toFixed(2))
+            setPricePerUnitTo(dataProdDetails.pricePerUnitTo.toFixed(2))
+            setPricePerUnitVar(dataProdDetails.pricePerUnitVar.toFixed(2))
+        }
+    }, [dataProdDetails])
 
     // Filter Values
     const [filterValues, setFilterValues] = useState<any>()
@@ -361,14 +365,14 @@ const ProductDetails = (props: any) => {
                                             Price Per <br />
                                             Pack From
                                         </label>
-                                        <input type="text" value={pricePerUnitFrom} onChange={(e: any) => setPricePerUnitFrom(e.target.value)} />
+                                        <input type="text" value={pricePerUnitFrom && pricePerUnitFrom} onChange={(e: any) => setPricePerUnitFrom(e.target.value)} />
                                     </li>
                                     <li>
                                         <label htmlFor="">
                                             Price Per <br />
                                             Pack To
                                         </label>
-                                        <input type="text" value={pricePerUnitTo} onChange={(e: any) => setPricePerUnitTo(e.target.value)} />
+                                        <input type="text" value={pricePerUnitFrom && pricePerUnitTo} onChange={(e: any) => setPricePerUnitTo(e.target.value)} />
                                     </li>
                                     <li>
                                         Var : <span className="highlight"> {pricePerUnitVar}</span>
