@@ -85,7 +85,7 @@ const RealvsExpected = (props: any) => {
                 const result = await response.json()
                 const resultData = result.brands[0].child[0]
                 setDataProd(resultData.weekData1)
-                localStorage.setItem(`product_realvsexp_${resultData.name}`, JSON.stringify(resultData.weekData1))
+                sessionStorage.setItem(`product_realvsexp_${resultData.name}`, JSON.stringify(resultData.weekData1))
             } else {
                 console.error('Failed to fetch data');
             }
@@ -99,7 +99,7 @@ const RealvsExpected = (props: any) => {
     useEffect(() => {
         if (render) {
             if (measureFilters) {
-                const cachedProduct = localStorage.getItem(`product_realvsexp_${props.activeProd}`);
+                const cachedProduct = sessionStorage.getItem(`product_realvsexp_${props.activeProd}`);
                 if (cachedProduct) {
                     setDataProd(JSON.parse(cachedProduct))
                 } else {
@@ -110,7 +110,6 @@ const RealvsExpected = (props: any) => {
             setRender(true);
         }
     }, [measureFilters]);
-    console.log('hello', dataProd)
 
 
     const [chartGraphDataState, setChartGraphDataState] = useState<any>()

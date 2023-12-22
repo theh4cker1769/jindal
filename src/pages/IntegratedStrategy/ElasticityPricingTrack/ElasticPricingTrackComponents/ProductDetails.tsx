@@ -42,8 +42,8 @@ const ProductDetails = (props: any) => {
         if (props.adjustableFilters) {
             setAdjustableFiltersData(props.adjustableFilters)
             setLoading(true)
-            localStorage.removeItem(`product_${props.activeProd}`)
-            localStorage.removeItem(`product_realvsexp_${props.activeProd}`)
+            sessionStorage.removeItem(`product_${props.activeProd}`)
+            sessionStorage.removeItem(`product_realvsexp_${props.activeProd}`)
         }
     }, [props.adjustableFilters])
 
@@ -264,7 +264,7 @@ const ProductDetails = (props: any) => {
                 const result = await response.json()
                 const resultData = result.brands[0].child[0]
                 setDataProd(resultData.week)
-                localStorage.setItem(`product_${resultData.name}`, JSON.stringify(resultData.week))
+                sessionStorage.setItem(`product_${resultData.name}`, JSON.stringify(resultData.week))
             } else {
                 console.error('Failed to fetch data');
             }
@@ -278,7 +278,7 @@ const ProductDetails = (props: any) => {
     useEffect(() => {
         if (render) {
             if (measureFilters) {
-                const cachedProduct = localStorage.getItem(`product_${props.activeProd}`);
+                const cachedProduct = sessionStorage.getItem(`product_${props.activeProd}`);
                 if (cachedProduct) {
                     setDataProd(JSON.parse(cachedProduct))
                 } else {
