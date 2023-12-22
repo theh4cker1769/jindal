@@ -27,8 +27,10 @@ const ElasticityPricingTrack = () => {
 
     //Product Index
     const [activeIndex, setActiveIndex] = useState<any>()
-    const sendActiveIndex = (i: any) => {
+    const [activeProd, setActiveProd] = useState<any>()
+    const sendActiveIndex = (v:any, i: any) => {
         setActiveIndex(i)
+        setActiveProd(v)
     }
 
     // Add Product 
@@ -62,7 +64,7 @@ const ElasticityPricingTrack = () => {
                         ? <MultipleProductDetails removeProductState={removeProductState} addProdPlusState={addProdPlusState} filterValue={filterValue} activeIndex={activeIndex} dataProdDetails={dataProdDetails}/>
                         :
                         <>
-                            <ProductDetails addProdPlusState={addProdPlusState} filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} />
+                            <ProductDetails activeProd={activeProd} addProdPlusState={addProdPlusState} filterValue={filterValue} activeIndex={activeIndex} adjustableFilters={adjustableFilters} dataProdDetails={dataProdDetails} />
                             <AdjustableFilters dataProdDetails={dataProdDetails} adjustablefiltersData={adjustablefiltersData} />
                         </>
                     }

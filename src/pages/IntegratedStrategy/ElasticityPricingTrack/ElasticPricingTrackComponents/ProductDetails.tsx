@@ -30,16 +30,20 @@ const ProductDetails = (props: any) => {
 
     useEffect(() => {
         if (props.dataProdDetails) {
+
             const objectWithoutArray = props.dataProdDetails[0]
             setMesurableFilters(objectWithoutArray)
         }
     }, props.dataProdDetails)
+
 
     const [adjustableFiltersData, setAdjustableFiltersData] = useState<any>()
     useEffect(() => {
         if (props.adjustableFilters) {
             setAdjustableFiltersData(props.adjustableFilters)
             setLoading(true)
+            localStorage.removeItem(`product_${props.activeProd}`)
+            localStorage.removeItem(`product_realvsexp_${props.activeProd}`)
         }
     }, [props.adjustableFilters])
 
@@ -226,7 +230,7 @@ const ProductDetails = (props: any) => {
     // Fetch Data
     const [dataProd, setDataProd] = useState<any>()
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAzMTM4Mzk4LCJleHAiOjE3MDMyMjQ3OTgsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMzEzODM5OH0._Hn0MrKRTnFr9VmMQoLTspIacPQPbIfa82Os0CMeeFc';
+        const token = process.env.REACT_APP_TOKEN;
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/unitvariationsexpected';
         const payload = {
             "country": payloadValue.country,
@@ -258,8 +262,9 @@ const ProductDetails = (props: any) => {
             });
             if (response.ok) {
                 const result = await response.json()
-                setDataProd(result.brands[0].child[0].week)
-
+                const resultData = result.brands[0].child[0]
+                setDataProd(resultData.week)
+                localStorage.setItem(`product_${resultData.name}`, JSON.stringify(resultData.week))
             } else {
                 console.error('Failed to fetch data');
             }
@@ -273,7 +278,12 @@ const ProductDetails = (props: any) => {
     useEffect(() => {
         if (render) {
             if (measureFilters) {
-                fetchData()
+                const cachedProduct = localStorage.getItem(`product_${props.activeProd}`);
+                if (cachedProduct) {
+                    setDataProd(JSON.parse(cachedProduct))
+                } else {
+                    fetchData()
+                }
             }
         } else {
             setRender(true);
@@ -321,16 +331,17 @@ const ProductDetails = (props: any) => {
         setPriceEffectToggleState(!priceEffectToggleState)
     }
 
-    const [gramEffectToggleState, setGramEffectToggleState] = useState(false)
-    const gramEffectToggle = () => {
-        setGramEffectToggleState(!gramEffectToggleState)
-    }
+    // const [gramEffectToggleState, setGramEffectToggleState] = useState(false)
+    // const gramEffectToggle = () => {
+    //     setGramEffectToggleState(!gramEffectToggleState)
+    // }
 
     const [totalEffectToggleState, setTotalEffectToggleState] = useState(false)
     const totalEffectToggle = () => {
         setTotalEffectToggleState(!totalEffectToggleState)
     }
 
+    
     return (
         <div className="product-details-main-graph">
             <h3 className="text-center p-2" id="sectionHead">
@@ -459,7 +470,7 @@ const ProductDetails = (props: any) => {
                     </div>
                 }
             </div>
-            <RealvsExpected payloadValue={payloadValue} activeIndex={activeIndex} filterValues={filterValues} measureFilters={measureFilters} adjustableFiltersData={adjustableFiltersData} />
+            <RealvsExpected activeProd={props.activeProd} payloadValue={payloadValue} activeIndex={activeIndex} filterValues={filterValues} measureFilters={measureFilters} adjustableFiltersData={adjustableFiltersData} />
         </div>
     )
 }

@@ -5,7 +5,7 @@ Chart.register(...registerables);
 
 const RealvsExpected = (props: any) => {
 
-    const [dataProd, setDataProd] = useState<any>()
+    
 
 
     //Measurable Fiters
@@ -46,8 +46,10 @@ const RealvsExpected = (props: any) => {
         }
     }, [props.activeIndex])
 
+    // Fetch Data
+    const [dataProd, setDataProd] = useState<any>()
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIiLCJqdGkiOiIiLCJpc3MiOiIiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNzAzMTM4Mzk4LCJleHAiOjE3MDMyMjQ3OTgsImNpZCI6IiIsInVpZCI6IiIsInNjcCI6IiIsImF1dGhfdGltZSI6IiIsInBlcGFwcG1pZWJhY2hyb2xlcyI6IiIsInBlcGFwcG1pZWJhY2h3YXJlaG91c2UiOiIiLCJwZXBSZWdpc3RlcmVkIjoiIiwibG9jYWxlIjoiIiwiRmlyc3ROYW1lIjoiTmFkZWVtIiwiTGFzdE5hbWUiOiJOYWthZGUiLCJlbWFpbCI6Im5hZGVlbS5uYWthZGVAamluZGFseC5jb20iLCJncGlkIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5hbWUiOiJuYWRlZW0ubmFrYWRlQGppbmRhbHguY29tIiwidXNlcl9pZCI6IjEwMDU4Iiwic3ViIjoibmFkZWVtLm5ha2FkZUBqaW5kYWx4LmNvbSIsIm5iZiI6MTcwMzEzODM5OH0._Hn0MrKRTnFr9VmMQoLTspIacPQPbIfa82Os0CMeeFc';
+        const token = process.env.REACT_APP_TOKEN;
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/realvsexpected';
         const payload = {
             "country": payloadValue.country,
@@ -81,8 +83,9 @@ const RealvsExpected = (props: any) => {
             });
             if (response.ok) {
                 const result = await response.json()
-                setDataProd(result.brands[0].child[0].weekData1)
-
+                const resultData = result.brands[0].child[0]
+                setDataProd(resultData.weekData1)
+                localStorage.setItem(`product_realvsexp_${resultData.name}`, JSON.stringify(resultData.weekData1))
             } else {
                 console.error('Failed to fetch data');
             }
@@ -92,11 +95,22 @@ const RealvsExpected = (props: any) => {
 
     }
 
+    const [render, setRender] = useState(false)
     useEffect(() => {
-        if (measureFilters) {
-            fetchData()
+        if (render) {
+            if (measureFilters) {
+                const cachedProduct = localStorage.getItem(`product_realvsexp_${props.activeProd}`);
+                if (cachedProduct) {
+                    setDataProd(JSON.parse(cachedProduct))
+                } else {
+                    fetchData()
+                }
+            }
+        } else {
+            setRender(true);
         }
-    }, [measureFilters])
+    }, [measureFilters]);
+    console.log('hello', dataProd)
 
 
     const [chartGraphDataState, setChartGraphDataState] = useState<any>()
