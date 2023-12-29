@@ -127,6 +127,12 @@ const Products = (props: any) => {
         props.sendActiveIndex(v,i)
     }
 
+    useEffect(()=> {
+        if(payloadValue.permutation.length) {
+            setActiveIndex(1)
+        }
+    }, [payloadValue.permutation])
+
     const fetchData = async () => {
         const token = process.env.REACT_APP_TOKEN;
         const url = 'https://client3.wisdomanalytics.com/server/api/dashboards/elasticitypricetracking/adjustablefilters';

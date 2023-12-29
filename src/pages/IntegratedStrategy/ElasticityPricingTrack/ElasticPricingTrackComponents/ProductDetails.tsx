@@ -341,7 +341,7 @@ const ProductDetails = (props: any) => {
         setTotalEffectToggleState(!totalEffectToggleState)
     }
 
-    
+
     return (
         <div className="product-details-main-graph">
             <h3 className="text-center p-2" id="sectionHead">
@@ -417,7 +417,7 @@ const ProductDetails = (props: any) => {
                         </div>
                         {chartGraphDataState &&
                             <div className="data-column">
-                                <div className="price-effect">
+                                {/* <div className="price-effect">
                                     <div className="heading" onClick={priceEffectToggle}>
                                         <h3>Price effect</h3>
                                         {!priceEffectToggleState ? <FiPlus /> : <FiMinus />}
@@ -432,24 +432,37 @@ const ProductDetails = (props: any) => {
                                             ))}
                                         </div>
                                     }
-                                </div>
-                                {/* <div className="price-effect gram-effect">
-                                <div className="heading" onClick={gramEffectToggle}>
-                                    <h3>Gram effect</h3>
-                                    {!gramEffectToggleState ? <FiPlus /> : <FiMinus />}
-                                </div>
-                                {gramEffectToggleState &&
+                                </div> */}
+                                <div className="price-effect horizontal">
+                                    <div className="heading">
+                                        <h3>Price effect</h3>
+                                    </div>
                                     <div className="content">
                                         {dataProd && dataProd.map((v: any, i: any) => (
                                             <span className="item" key={i}>
                                                 {i + 1} <br />
-                                                <i>{v.gramEffect.toFixed(2)}</i>
+                                                <i>{v.priceEffect.toFixed(2)}</i>
                                             </span>
                                         ))}
                                     </div>
-                                }
-                            </div> */}
-                                <div className="price-effect total-effect">
+                                </div>
+                                {/* <div className="price-effect gram-effect">
+                                        <div className="heading" onClick={gramEffectToggle}>
+                                            <h3>Gram effect</h3>
+                                            {!gramEffectToggleState ? <FiPlus /> : <FiMinus />}
+                                        </div>
+                                        {gramEffectToggleState &&
+                                            <div className="content">
+                                                {dataProd && dataProd.map((v: any, i: any) => (
+                                                    <span className="item" key={i}>
+                                                        {i + 1} <br />
+                                                        <i>{v.gramEffect.toFixed(2)}</i>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        }
+                                    </div> */}
+                                {/* <div className="price-effect total-effect">
                                     <div className="heading" onClick={totalEffectToggle}>
                                         <h3>Total effect</h3>
                                         {!totalEffectToggleState ? <FiPlus /> : <FiMinus />}
@@ -464,6 +477,19 @@ const ProductDetails = (props: any) => {
                                             ))}
                                         </div>
                                     }
+                                </div> */}
+                                <div className="price-effect horizontal total-effect">
+                                    <div className="heading">
+                                        <h3>Total effect</h3>
+                                    </div>
+                                    <div className="content">
+                                        {dataProd && dataProd.map((v: any, i: any) => (
+                                            <span className="item" key={i}>
+                                                {i + 1} <br />
+                                                <i>{v.totalEffect.toFixed(2)}</i>
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         }

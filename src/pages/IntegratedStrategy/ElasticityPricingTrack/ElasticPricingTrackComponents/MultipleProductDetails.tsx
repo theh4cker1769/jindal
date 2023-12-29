@@ -301,9 +301,27 @@ const MultipleProductDetails = (props: any) => {
                                 />
                             }
                         </div>
-                        <div className="data-column">
+                        {/* <div className="data-column">
                             {selectedProdMes.map((v: any, i: any) => (
                                 <div className="price-effect" key={i}>
+                                    <div className="heading">
+                                        <h3>{v.displayName}</h3>
+                                    </div>
+                                    <div className="content">
+                                        {v.week.map((v: any, i: any) => (
+                                            <span className="item" key={i}>
+                                                {i+1}
+                                                <br />
+                                                <i>{v.priceEffect.toFixed(2)}</i>
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div> */}
+                        <div className="data-column horizontal">
+                            {selectedProdMes.map((v: any, i: any) => (
+                                <div className="price-effect horizontal" key={i}>
                                     <div className="heading">
                                         <h3>{v.displayName}</h3>
                                     </div>

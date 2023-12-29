@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .main {
     display: flex;
 }
@@ -490,6 +496,45 @@
     border-top: 2px solid #ff6384;
 }
 
+.data-column .price-effect.horizontal {
+    width: 59vw;
+}
+
+.data-column .price-effect.horizontal .content {
+    overflow-x: auto;
+    display: flex;
+    white-space: nowrap;
+}
+
+.data-column .price-effect.horizontal .content .item {
+    padding: 0px 18px;
+}
+
+.data-column .price-effect.horizontal .content::-webkit-scrollbar {
+    height: 6px;
+}
+
+.data-column .price-effect.horizontal .content::-webkit-scrollbar-thumb {
+    background: #f18586;
+    border-radius: 6px;
+}
+
+.data-column .price-effect.horizontal .content::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}
+
+.data-column .price-effect.horizontal .content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.data-column .price-effect.horizontal.total-effect .content::-webkit-scrollbar-thumb {
+    background: #7269ff;
+}
+
+.data-column .price-effect.horizontal.total-effect .content::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}
+
 /* Real vs Expected */
 
 .realvsexpected {
@@ -724,6 +769,33 @@
     font-size: 15px;
 }
 
-.multiple-products .data-column .price-effect .content {
-    grid-template-columns: repeat(5, 1fr);
+.multiple-products .data-column.horizontal {
+    display: block;
+}
+
+.multiple-products .data-column .price-effect.horizontal .content {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.multiple-products .data-column .price-effect {
+    width: 73vw;
+}
+
+.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar {
+    height: 6px;
+}
+
+.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar-thumb {
+    background: #8078ff;
+    border-radius: 6px;
+}
+
+.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}
+
+.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
