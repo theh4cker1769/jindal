@@ -742,60 +742,58 @@
     width: 85%;
 }
 
-.multiple-products .data-column {
-    display: flex;
-    gap: 2px;
-}
-
-.multiple-products .data-column .price-effect {
-    flex: 1;
-}
-
-.multiple-products .data-column .price-effect .heading {
-    background-color: #8078ff;
-    border-radius: 0;
-}
-
-.multiple-products .data-column .price-effect .content {
-    border-left: 1px solid #8078ff;
-}
-
-.multiple-products .data-column .price-effect .content .item {
-    border-bottom: 1px solid #8078ff;
-    border-right: 1px solid #8078ff;
-}
-
-.multiple-products .data-column .price-effect .heading h3 {
-    font-size: 15px;
-}
-
-.multiple-products .data-column.horizontal {
+.multiple-products .product-table {
+    width: 73vw;
+    border-collapse: collapse;
     display: block;
+    overflow-x: auto;
+    margin-bottom: 30px;
 }
 
-.multiple-products .data-column .price-effect.horizontal .content {
-    display: flex;
-    overflow-x: auto;
+.multiple-products .product-table th {
+    font-weight: 600;
     white-space: nowrap;
 }
 
-.multiple-products .data-column .price-effect {
-    width: 73vw;
+.multiple-products .product-table th,
+.multiple-products .product-table td {
+    border: 1px solid black;
+    padding: 12px;
+    text-align: left;
 }
 
-.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar {
-    height: 6px;
+.multiple-products .product-table thead {
+    background-color: #8078ff;
+    color: white;
 }
 
-.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar-thumb {
+.multiple-products .product-table tbody tr:nth-child(odd) {
+    background-color: #ebebeb;
+}
+
+.multiple-products .product-table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.multiple-products .product-table td:first-child {
+    background-color: #8078ff;
+    color: white;
+    white-space: nowrap;
+}
+
+.multiple-products .product-table::-webkit-scrollbar {
+    height: 8px;
+}
+
+.multiple-products .product-table::-webkit-scrollbar-thumb {
     background: #8078ff;
     border-radius: 6px;
 }
 
-.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar-thumb:hover {
+.multiple-products .product-table::-webkit-scrollbar-thumb:hover {
     background: #ccc;
 }
 
-.multiple-products .data-column .price-effect.horizontal .content::-webkit-scrollbar-track {
+.multiple-products .product-table::-webkit-scrollbar-track {
     background: #f1f1f1;
 }

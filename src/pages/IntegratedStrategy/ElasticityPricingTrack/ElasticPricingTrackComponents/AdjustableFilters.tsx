@@ -82,10 +82,10 @@ const AdjustableFilters = (props: any) => {
                             <h6>Price elasticity expected</h6>
                             <input type="text" value={priceElasticityExpected} onChange={(e: any) => setPriceElasticityExpected(e.target.value)} />
                         </div>
-                        <div className="item">
+                        {/* <div className="item">
                             <h6>Gram elasticity expected</h6>
                             <input type="text" value={gramsElasticityExpected} onChange={(e: any) => setGramsElasticityExpected(e.target.value)} />
-                        </div>
+                        </div> */}
                         <div className="item">
                             <div className="filter-radio">
                                 <h6>Model price elasticity curve</h6>
@@ -107,7 +107,7 @@ const AdjustableFilters = (props: any) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="item">
+                        {/* <div className="item">
                             <div className="filter-radio">
                                 <h6>Model gram elasticity curve</h6>
                                 <div className="custom-radio">
@@ -127,7 +127,7 @@ const AdjustableFilters = (props: any) => {
                                     <label htmlFor="radio8">No Curve</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <button className="filterBtn" type="button" onClick={applyAdjust}>Apply</button>
                     </div>
                 </div>

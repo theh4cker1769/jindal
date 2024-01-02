@@ -206,7 +206,7 @@ const MultipleProductDetails = (props: any) => {
         }
     }, [dataProd])
 
-    
+
 
     useEffect(() => {
         if (props.removeProductState) {
@@ -232,13 +232,13 @@ const MultipleProductDetails = (props: any) => {
         }
     }, [selectedProdMes])
 
-    useEffect(()=>{
-        if(selectedProdMes) {
+    useEffect(() => {
+        if (selectedProdMes) {
             setLoading(false)
         }
     }, [chartGraphDataState])
 
-    
+
     return (
         <div className="product-details-main-graph multiple-products">
             <h3 className="text-center p-2" id="sectionHead">
@@ -301,42 +301,27 @@ const MultipleProductDetails = (props: any) => {
                                 />
                             }
                         </div>
-                        {/* <div className="data-column">
-                            {selectedProdMes.map((v: any, i: any) => (
-                                <div className="price-effect" key={i}>
-                                    <div className="heading">
-                                        <h3>{v.displayName}</h3>
-                                    </div>
-                                    <div className="content">
-                                        {v.week.map((v: any, i: any) => (
-                                            <span className="item" key={i}>
-                                                {i+1}
-                                                <br />
-                                                <i>{v.priceEffect.toFixed(2)}</i>
-                                            </span>
+                        <table className="product-table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    {selectedProdMes[0] && selectedProdMes[0].week.map((_: any, i: any) => (
+                                        <th key={i}>Week {i + 1}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedProdMes.map((product:any, i:any) => (
+                                    <tr key={i}>
+                                        <td>{product.displayName}</td>
+                                        {product.week.map((weekData:any, i:any) => (
+                                            <td key={i}>{weekData.priceEffect.toFixed(2)}</td>
                                         ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
-                        <div className="data-column horizontal">
-                            {selectedProdMes.map((v: any, i: any) => (
-                                <div className="price-effect horizontal" key={i}>
-                                    <div className="heading">
-                                        <h3>{v.displayName}</h3>
-                                    </div>
-                                    <div className="content">
-                                        {v.week.map((v: any, i: any) => (
-                                            <span className="item" key={i}>
-                                                {i+1}
-                                                <br />
-                                                <i>{v.priceEffect.toFixed(2)}</i>
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+
                     </div>
                 }
             </div>

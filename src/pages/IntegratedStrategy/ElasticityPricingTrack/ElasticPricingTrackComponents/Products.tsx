@@ -122,13 +122,13 @@ const Products = (props: any) => {
     }, [filterValues])
 
     const [activeIndex, setActiveIndex] = useState<any>()
-    const handleItemClick = (v:any,i: any) => {
+    const handleItemClick = (v: any, i: any) => {
         setActiveIndex(i)
-        props.sendActiveIndex(v,i)
+        props.sendActiveIndex(v, i)
     }
 
-    useEffect(()=> {
-        if(payloadValue.permutation.length) {
+    useEffect(() => {
+        if (payloadValue.permutation.length) {
             setActiveIndex(1)
         }
     }, [payloadValue.permutation])
@@ -198,24 +198,27 @@ const Products = (props: any) => {
     // Multile Products Select
 
     const [selectedProd, setSelectedProd] = useState<any>([]);
-    const handlePlus = (v:any, i: any) => {
-        const isSelected = selectedProd.includes(v)
-        if (isSelected) {
-            setSelectedProd(selectedProd.filter((key:any) => key !== v));
-        } else if (selectedProd.length < 3) {
+    const handlePlus = (v: any, i: any) => {
+        if (!selectedProd.length && !selectedProd.includes(payloadValue.permutation[activeIndex - 1])) {
+            if (v !== payloadValue.permutation[activeIndex - 1]) {
+                selectedProd.push(payloadValue.permutation[activeIndex - 1]);
+            }
+        }
+        if (selectedProd.length < 3) {
             setSelectedProd([...selectedProd, v]);
         }
     }
+    console.log(selectedProd)
 
-    useEffect(()=> {
+    useEffect(() => {
         props.addProdPlus(selectedProd)
     }, [selectedProd])
 
-    const removeProduct = (v:any) => {
+    const removeProduct = (v: any) => {
         props.removeProduct(v)
         const isSelected = selectedProd.includes(v)
         if (isSelected) {
-            setSelectedProd(selectedProd.filter((key:any) => key !== v));
+            setSelectedProd(selectedProd.filter((key: any) => key !== v));
         }
     }
 
@@ -231,8 +234,8 @@ const Products = (props: any) => {
                         {payloadValue.permutation && payloadValue.permutation.length > 0 ?
                             <>
                                 {payloadValue.permutation.map((v: any, i: any) => (
-                                    <li key={i + 1} onClick={() => handleItemClick(v, i + 1)} className={activeIndex === i + 1 && !selectedProd.length ? 'active' : `${selectedProd.includes(v) ? 'multiProd' : ''}`}>
-                                        {v} <i className='icon' onClick={(e:any) => {handlePlus(v, i + 1)}}> {selectedProd.includes(v) ?<FiMinus onClick={(e:any) => (removeProduct(v), e.stopPropagation())}/>  : <> {selectedProd.length !== 3  &&  <FiPlus />} </>}</i>
+                                    <li key={i + 1} onClick={() => handleItemClick(v, i + 1)} className={`${activeIndex === i + 1 && !selectedProd.length ? 'active' : ''} ${selectedProd.includes(v) ? 'multiProd' : ''}`}>
+                                        {v} <i className='icon' onClick={(e: any) => (handlePlus(v, i + 1))}> {selectedProd.includes(v) ? <FiMinus onClick={(e: any) => (removeProduct(v), e.stopPropagation())} /> : <> {selectedProd.length !== 3 && <FiPlus />} </>}</i>
                                     </li>
                                 ))}
                             </>
